@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <drawable name="base_drawable_a0a0a0">#a0a0a0</drawable>
+    <drawable name="base_transparent">#00000000</drawable>
+
+</resources>

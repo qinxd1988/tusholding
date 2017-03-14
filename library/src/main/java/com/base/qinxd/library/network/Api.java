@@ -2,7 +2,7 @@ package com.base.qinxd.library.network;
 
 import android.content.Context;
 
-import com.base.qinxd.library.activity.BaseActivity;
+import com.base.qinxd.library.ui.activity.BaseActivity;
 import com.base.qinxd.library.entity.BaseEntity;
 import com.base.qinxd.library.utils.ContextUtil;
 import com.base.qinxd.library.utils.HttpUtils;

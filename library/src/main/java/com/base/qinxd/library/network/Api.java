@@ -170,7 +170,9 @@ public abstract class Api<T> implements Callback<T> {
 
         Call<T> call = call();
 
-        HttpUtils.putCall(mContext, "", call);
+        String url = call.request().url().toString();
+
+        HttpUtils.putCall(mContext, url, call);
 
         call.enqueue(this);
 

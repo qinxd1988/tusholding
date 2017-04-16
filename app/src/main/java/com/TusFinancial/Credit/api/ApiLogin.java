@@ -35,7 +35,23 @@ public class ApiLogin extends Api<BaseEntity> {
         super(context);
 
         // 初始化api
-        mApiStore = ApiRequest.getInstance().create(ApiStore.class, "");
+        mApiStore = ApiRequest.getInstance().create(context, ApiStore.class);
+
+    }
+
+    public ApiLogin setUserName(String username) {
+
+        this.username = username;
+
+        return this;
+
+    }
+
+    public ApiLogin setPassWord(String password) {
+
+        this.password = password;
+
+        return this;
 
     }
 
@@ -44,7 +60,7 @@ public class ApiLogin extends Api<BaseEntity> {
 
         Map<String, String> map = super.postParams();
 
-        map.put("username", URLEncoder.encode(username));
+        map.put("userName", URLEncoder.encode(username));
 
         map.put("password", password);
 
@@ -52,21 +68,15 @@ public class ApiLogin extends Api<BaseEntity> {
     }
 
     @Override
-    public Call<BaseEntity> call() {
+    public final Call<BaseEntity> call() {
 
         return mApiStore.login(postParams());
 
     }
 
-    /**
-     * @interfaceName: ApiStore
-     * @interfaceDescription: 登录模块api接口
-     * @author: leibing
-     * @createTime: 2016/08/30
-     */
     private interface ApiStore {
 
-        @POST("/app/User/login")
+        @POST("login/userLogin.shtml")
         Call<BaseEntity> login(@FieldMap Map<String, String> postParams);
 
     }

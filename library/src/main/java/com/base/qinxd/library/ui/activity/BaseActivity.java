@@ -1,5 +1,7 @@
 package com.base.qinxd.library.ui.activity;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -13,6 +15,11 @@ import android.support.v4.app.FragmentActivity;
  */
 public class BaseActivity extends FragmentActivity {
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     public void showLoading() {
 
 
@@ -22,5 +29,12 @@ public class BaseActivity extends FragmentActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        dismissLoading();
+
+    }
 
 }

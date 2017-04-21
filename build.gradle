@@ -2,7 +2,7 @@
 
 buildscript {
     repositories {
-        jcenter()
+        jcenter(){ url 'http://jcenter.bintray.com/'}//添加jcenter url 增快gradle依赖包下载速度
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
@@ -14,7 +14,7 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        jcenter(){ url 'http://jcenter.bintray.com/'}
     }
 }
 

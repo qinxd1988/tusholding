@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_input_bg">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/jindiao_num_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入手机号"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/login_input_bg">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/jindiao_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入密码"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/jindiao_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/color_6ce09e"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@android:color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/jindiao_forget_password_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="忘记密码"
+                android:textColor="@color/color_6ce09e"
+                android:textSize="12dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/jindiao_register_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:text="注册账号"
+                android:textColor="@color/color_6ce09e"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginTop="90dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/other_login_method_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="其他方式登录"
+                android:textColor="@android:color/black"
+                android:textSize="14dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/other_login_method_text"
+                android:background="@color/color_c9c9c9" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@+id/other_login_method_text"
+                android:background="@color/color_c9c9c9" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/jindiao_wechat_login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/ic_phone_quick_login"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="微信登录"
+            android:textSize="12dp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/jindiao_phone_quick_login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/ic_phone_quick_login"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="手机快捷登录"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+</ScrollView>

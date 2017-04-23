@@ -7,7 +7,6 @@ import com.base.qinxd.library.entity.BaseEntity;
 import com.base.qinxd.library.network.Api;
 import com.base.qinxd.library.network.ApiRequest;
 
-import java.net.URLEncoder;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -16,42 +15,45 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- * 作者：qinxudong
- * <p/>
- * 时间：2017/3/13 15:55
- * <p/>
- * 邮箱：qinxd1988@163.com
- * <p/>
- * 描述：
+ * Created by xd on 2017/4/23.
  */
-public class ApiLogin extends Api<BaseEntity> {
 
-    private ApiStore mApiStore;
+public class ApiRegAccount extends Api<BaseEntity> {
 
-    public String username;
+    ApiStore mApiStore;
 
-    public String password;
+    private String phone;
 
-    public ApiLogin(Context context) {
+    private String password;
 
+    private String phoneVerify;
+
+    public ApiRegAccount(Context context) {
         super(context);
 
-        // 初始化api
         mApiStore = ApiRequest.getInstance().create(context, ApiStore.class);
 
     }
 
-    public ApiLogin setUserName(String username) {
+    public ApiRegAccount setPhone(String phone) {
 
-        this.username = username;
+        this.phone = phone;
 
         return this;
 
     }
 
-    public ApiLogin setPassWord(String password) {
+    public ApiRegAccount setPassword(String password) {
 
         this.password = password;
+
+        return this;
+
+    }
+
+    public ApiRegAccount setPhoneVerify(String phoneVerify) {
+
+        this.phoneVerify = phoneVerify;
 
         return this;
 
@@ -62,9 +64,15 @@ public class ApiLogin extends Api<BaseEntity> {
 
         Map<String, String> map = super.postParams();
 
-        if (!TextUtils.isEmpty(username)) {
+        if (!TextUtils.isEmpty(phone)) {
 
-            map.put("userName", URLEncoder.encode(username));
+            map.put("phone", phone);
+
+        }
+
+        if (!TextUtils.isEmpty(phoneVerify)) {
+
+            map.put("phoneVerify", phoneVerify);
 
         }
 
@@ -75,20 +83,21 @@ public class ApiLogin extends Api<BaseEntity> {
         }
 
         return map;
+
     }
 
     @Override
     public final Call<BaseEntity> call() {
 
-        return mApiStore.login(postParams());
+        return mApiStore.regAccount(postParams());
 
     }
 
     private interface ApiStore {
 
         @FormUrlEncoded
-        @POST("/login/userLogin.shtml")
-        Call<BaseEntity> login(@FieldMap Map<String, String> postParams);
+        @POST("/regist/regAccount.shtml")
+        Call<BaseEntity> regAccount(@FieldMap Map<String, String> postParams);
 
     }
 

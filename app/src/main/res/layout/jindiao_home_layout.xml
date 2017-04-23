@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_f4f5f9">
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/replace_layout"
+        android:layout_above="@+id/tab_btn_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <RadioGroup
         android:id="@+id/tab_btn_group"
@@ -19,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="5dp"
+            android:drawablePadding="3dp"
             android:drawableTop="@drawable/home_selector"
             android:gravity="center"
             android:text="首页"
@@ -32,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="5dp"
+            android:drawablePadding="3dp"
             android:drawableTop="@drawable/information_selector"
             android:gravity="center"
             android:text="咨询"
@@ -45,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="5dp"
+            android:drawablePadding="3dp"
             android:drawableTop="@drawable/ganhuo_selector"
             android:gravity="center"
             android:text="干货"
@@ -58,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="5dp"
+            android:drawablePadding="3dp"
             android:drawableTop="@drawable/my_selector"
             android:gravity="center"
             android:text="我的"

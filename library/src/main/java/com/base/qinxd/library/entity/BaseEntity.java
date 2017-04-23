@@ -13,35 +13,16 @@ import java.io.Serializable;
  */
 public class BaseEntity implements Serializable {
 
-    // 是否成功
-    private boolean isSuccess;
-    // 数据
-    public String info;
-    // 错误消息
-    public String errormsg;
+    public String code;
+
+    public String msg;
+
+    public String data;
 
     public boolean isSuccess() {
-        return isSuccess;
-    }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
-    }
+        return "C00000".equals(code);
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getErrormsg() {
-        return errormsg;
-    }
-
-    public void setErrormsg(String errormsg) {
-        this.errormsg = errormsg;
     }
 
 }

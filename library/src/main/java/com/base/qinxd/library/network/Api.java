@@ -94,7 +94,7 @@ public abstract class Api<T> implements Callback<T> {
 
             } else {
 
-                mCallBack.onError(((BaseEntity) response.body()).getErrormsg());
+                mCallBack.onError(((BaseEntity) response.body()).msg);
 
             }
 

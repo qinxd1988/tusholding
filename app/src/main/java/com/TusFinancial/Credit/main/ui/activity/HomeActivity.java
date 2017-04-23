@@ -3,12 +3,22 @@ package com.TusFinancial.Credit.main.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.TusFinancial.Credit.R;
+import com.TusFinancial.Credit.main.ui.fragment.GanHuoFragment;
+import com.TusFinancial.Credit.main.ui.fragment.HomeFragment;
+import com.TusFinancial.Credit.main.ui.fragment.InformationFragment;
+import com.TusFinancial.Credit.main.ui.fragment.MyFragment;
 import com.base.qinxd.library.ui.activity.BaseActivity;
+import com.base.qinxd.library.ui.fragment.BaseFragment;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,11 +49,17 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.tab_my_btn)
     RadioButton myBtn;
 
+    private Map<Integer, BaseFragment> fragmentMap = new HashMap<>();
+
+    FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.jindiaodashi_home_layout);
+        fragmentManager = getSupportFragmentManager();
+
+        setContentView(R.layout.jindiao_home_layout);
 
         ButterKnife.bind(this);
 
@@ -51,43 +67,91 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
-                String message = "";
-
-                switch (checkedId) {
-
-                    case R.id.tab_home_btn:
-
-                        message = "点击了首页";
-
-                        break;
-
-                    case R.id.tab_information_btn:
-
-                        message = "点击了咨询";
-
-                        break;
-
-                    case R.id.tab_ganhuo_btn:
-
-                        message = "点击了干货";
-
-                        break;
-
-                    case R.id.tab_my_btn:
-
-                        message = "点击了我的";
-
-                        break;
-
-                }
-
-                Toast.makeText(HomeActivity.this,message,Toast.LENGTH_SHORT).show();
+                fragmentOperate(checkedId);
 
             }
 
         });
 
         homeBtn.setChecked(true);
+
+    }
+
+    void fragmentOperate(int resId) {
+
+        BaseFragment fragment = fragmentMap.get(resId);
+
+        if (fragment == null) {
+
+            switch (resId) {
+
+                case R.id.tab_home_btn:
+
+                    fragment = HomeFragment.newInstance();
+
+                    break;
+
+                case R.id.tab_information_btn:
+
+                    fragment = InformationFragment.newInstance();
+
+                    break;
+
+                case R.id.tab_ganhuo_btn:
+
+                    fragment = GanHuoFragment.newInstance();
+
+                    break;
+
+                case R.id.tab_my_btn:
+
+                    fragment = MyFragment.newInstance();
+
+                    break;
+
+            }
+
+        }
+
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+
+        boolean isAdded = false;
+
+        if (fragmentList != null) {
+
+            isAdded = fragmentList.contains(fragment);
+
+            if (isAdded) {//已添加 显示
+
+                for (Fragment frag : fragmentList) {
+
+                    if (frag != fragment) {
+
+                        fragmentManager.beginTransaction().hide(frag).commitAllowingStateLoss();
+
+                    }
+
+                }
+
+                fragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
+
+                return;
+
+            }
+
+        }
+
+        if (!isAdded) {//未添加，将fragment 添加
+
+            fragmentMap.put(resId, fragment);
+
+            fragmentManager
+                    .beginTransaction()
+                    .add(R.id.replace_layout, fragment)
+                    .disallowAddToBackStack()
+                    .commitAllowingStateLoss();
+
+        }
 
     }
 

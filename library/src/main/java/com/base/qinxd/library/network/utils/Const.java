@@ -11,6 +11,6 @@ package com.base.qinxd.library.network.utils;
  */
 public class Const {
 
-    public final static String BASE_URL = "http://113.208.118.59:9115/";
+    public final static String BASE_URL = "http://113.208.118.59:9115";
 
 }

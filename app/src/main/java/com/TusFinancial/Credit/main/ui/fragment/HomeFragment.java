@@ -55,7 +55,7 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showTopSearchLayoutHeight = Math.round(JinDiaoApplication.DENSITY * 58);
+        showTopSearchLayoutHeight = Math.round(JinDiaoApplication.DENSITY * 60);
 
     }
 
@@ -73,6 +73,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ViewGroup.LayoutParams params = appBarLayout.getLayoutParams();
+
+        params.height = Math.round(JinDiaoApplication.WIDTH * 1f / 75 * 33);
+
+        appBarLayout.setLayoutParams(params);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override

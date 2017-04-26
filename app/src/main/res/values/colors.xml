@@ -14,4 +14,10 @@
 
     <color name="color_6ce09e">#6ce09e</color>
 
+    <color name="color_000000_alpha_50">#80000000</color>
+
+    <color name="color_000000_alpha_20">#34000000</color>
+
+    <color name="color_e8e9ec">#e8e9ec</color>
+
 </resources>

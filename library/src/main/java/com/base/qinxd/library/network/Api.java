@@ -6,6 +6,7 @@ import com.base.qinxd.library.ui.activity.BaseActivity;
 import com.base.qinxd.library.entity.BaseEntity;
 import com.base.qinxd.library.utils.ContextUtil;
 import com.base.qinxd.library.utils.HttpUtils;
+import com.base.qinxd.library.utils.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,13 +24,87 @@ import retrofit2.Response;
  * <p/>
  * 描述：
  */
-public abstract class Api<T> implements Callback<T> {
+public abstract class Api<T> {
 
     private Context mContext;
 
-    protected ApiCallBack<T> mCallBack;
+    protected ApiCallBack<T> mApiCallBack;
 
     protected boolean isShowLoading;
+
+    private Callback<T> mCallBack = new Callback<T>() {
+
+        @Override
+        public void onResponse(Call<T> call, Response<T> response) {
+
+            Logger.e("onResponse -----> ");
+
+            dismissLoading();
+
+            if (mApiCallBack == null) {
+
+                throw new NullPointerException("mCallback == null");
+
+            }
+
+            if (mContext instanceof BaseActivity) {
+
+                if (!ContextUtil.isAcivityActive((BaseActivity) mContext)) {
+
+                    return;
+
+                }
+
+            }
+
+            if (response != null && response.body() != null) {
+
+                if (((BaseEntity) response.body()).isSuccess()) {
+
+                    mApiCallBack.onSuccess((T) response.body());
+
+                } else {
+
+                    mApiCallBack.onError(((BaseEntity) response.body()).msg);
+
+                }
+
+            } else {
+
+                mApiCallBack.onFailure();
+
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<T> call, Throwable t) {
+
+            Logger.e("onFailure -----> "+t.getMessage());
+
+            dismissLoading();
+
+            if (mApiCallBack == null) {
+
+                throw new NullPointerException("mCallback == null");
+
+            }
+
+            if (mContext instanceof BaseActivity) {
+
+                if (!ContextUtil.isAcivityActive((BaseActivity) mContext)) {
+
+                    return;
+
+                }
+
+            }
+
+            mApiCallBack.onFailure();
+
+        }
+
+    };
 
     public Api(Context context) {
 
@@ -65,72 +140,6 @@ public abstract class Api<T> implements Callback<T> {
 
     }
 
-    @Override
-    public void onResponse(Call<T> call, Response<T> response) {
-
-        dismissLoading();
-
-        if (mCallBack == null) {
-
-            throw new NullPointerException("mCallback == null");
-
-        }
-
-        if (mContext instanceof BaseActivity) {
-
-            if (!ContextUtil.isAcivityActive((BaseActivity) mContext)) {
-
-                return;
-
-            }
-
-        }
-
-        if (response != null && response.body() != null) {
-
-            if (((BaseEntity) response.body()).isSuccess()) {
-
-                mCallBack.onSuccess((T) response.body());
-
-            } else {
-
-                mCallBack.onError(((BaseEntity) response.body()).msg);
-
-            }
-
-        } else {
-
-            mCallBack.onFailure();
-
-        }
-
-    }
-
-    @Override
-    public void onFailure(Call<T> call, Throwable t) {
-
-        dismissLoading();
-
-        if (mCallBack == null) {
-
-            throw new NullPointerException("mCallback == null");
-
-        }
-
-        if (mContext instanceof BaseActivity) {
-
-            if (!ContextUtil.isAcivityActive((BaseActivity) mContext)) {
-
-                return;
-
-            }
-
-        }
-
-        mCallBack.onFailure();
-
-    }
-
     /**
      * 设置是否显示加载框
      *
@@ -153,7 +162,7 @@ public abstract class Api<T> implements Callback<T> {
      */
     public Api setApiCallBack(ApiCallBack<T> callBack) {
 
-        this.mCallBack = callBack;
+        this.mApiCallBack = callBack;
 
         return this;
 
@@ -174,7 +183,7 @@ public abstract class Api<T> implements Callback<T> {
 
         HttpUtils.putCall(mContext, url, call);
 
-        call.enqueue(this);
+        call.enqueue(mCallBack);
 
     }
 

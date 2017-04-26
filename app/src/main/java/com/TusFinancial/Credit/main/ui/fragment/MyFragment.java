@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.loginRegister.ui.activity.LoginActivity;
+import com.TusFinancial.Credit.loginRegister.ui.activity.RegisterActivity;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
@@ -71,6 +72,15 @@ public class MyFragment extends BaseFragment {
     void onClick() {
 
         Intent intent = new Intent(getContext(), LoginActivity.class);
+
+        startActivity(intent);
+
+    }
+
+    @OnClick(R.id.my_register_text)
+    void onRegisterClick() {
+
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
 
         startActivity(intent);
 

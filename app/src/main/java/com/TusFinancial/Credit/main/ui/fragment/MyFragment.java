@@ -8,8 +8,12 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.TusFinancial.Credit.R;
+import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.loginRegister.ui.activity.LoginActivity;
 import com.TusFinancial.Credit.loginRegister.ui.activity.RegisterActivity;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
@@ -27,6 +31,45 @@ public class MyFragment extends BaseFragment {
 
     @BindView(R.id.my_login_text)
     AppCompatTextView loginText;
+
+    @BindView(R.id.my_head_img)
+    ImageView mMyHeadImg;
+
+    @BindView(R.id.my_register_text)
+    AppCompatTextView mMyRegisterText;
+
+    @BindView(R.id.my_login_register_layout)
+    LinearLayout mMyLoginRegisterLayout;
+
+    @BindView(R.id.my_name_text)
+    AppCompatTextView mMyNameText;
+
+    @BindView(R.id.my_project_layout)
+    RelativeLayout mMyProjectLayout;
+
+    @BindView(R.id.my_report_layout)
+    RelativeLayout mMyReportLayout;
+
+    @BindView(R.id.my_focus_company_layout)
+    RelativeLayout mMyFocusCompanyLayout;
+
+    @BindView(R.id.my_collection_layout)
+    RelativeLayout mMyCollectionLayout;
+
+    @BindView(R.id.my_browsing_history_layout)
+    RelativeLayout mMyBrowsingHistoryLayout;
+
+    @BindView(R.id.my_setting_layout)
+    RelativeLayout mMySettingLayout;
+
+    @BindView(R.id.my_kefu_layout)
+    RelativeLayout mMyKefuLayout;
+
+    @BindView(R.id.my_fankui_layout)
+    RelativeLayout mMyFankuiLayout;
+
+    @BindView(R.id.my_about_layout)
+    RelativeLayout mMyAboutLayout;
 
     public static MyFragment newInstance() {
 
@@ -83,6 +126,45 @@ public class MyFragment extends BaseFragment {
         Intent intent = new Intent(getContext(), RegisterActivity.class);
 
         startActivity(intent);
+
+    }
+
+    @OnClick({R.id.my_project_layout, R.id.my_report_layout,
+            R.id.my_focus_company_layout, R.id.my_collection_layout,
+            R.id.my_browsing_history_layout, R.id.my_fankui_layout})
+    void onNeedLoginClick(View view) {
+
+        String url = "default";
+
+        switch (view.getId()) {
+
+            case R.id.my_project_layout:
+
+                break;
+
+            case R.id.my_report_layout:
+
+                break;
+
+            case R.id.my_focus_company_layout:
+
+                break;
+
+            case R.id.my_collection_layout:
+
+                break;
+
+            case R.id.my_browsing_history_layout:
+
+                break;
+
+            case R.id.my_fankui_layout:
+
+                break;
+
+        }
+
+        TransferHelper.onTransfer(getContext(), url, true);
 
     }
 

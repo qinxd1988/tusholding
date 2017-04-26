@@ -17,6 +17,8 @@ public class JinDiaoApplication extends Application {
 
     public static float DENSITY;
 
+    public static String TOKEN;
+
     @Override
     public void onCreate() {
         super.onCreate();

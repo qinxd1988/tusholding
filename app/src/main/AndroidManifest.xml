@@ -2,7 +2,15 @@
           package="com.TusFinancial.Credit">
 
     <!-- 联网权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".JinDiaoApplication"
@@ -21,9 +29,9 @@
 
             <intent-filter>
 
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
 
             </intent-filter>
 
@@ -32,7 +40,23 @@
         <!-- 登录页面 -->
         <activity
             android:name=".loginRegister.ui.activity.LoginActivity"
-            android:theme="@style/AppTheme.Login">
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Login"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="login"
+                    android:scheme="jindiao"/>
+
+            </intent-filter>
 
         </activity>
 
@@ -56,6 +80,7 @@
             android:theme="@style/AppTheme.Login">
 
         </activity>
+        <activity android:name=".browse.ui.activity.BrowseActivity"/>
 
 
     </application>

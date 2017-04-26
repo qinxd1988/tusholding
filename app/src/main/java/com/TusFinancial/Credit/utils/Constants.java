@@ -11,4 +11,8 @@ package com.TusFinancial.Credit.utils;
  */
 public class Constants {
 
+    public static final String URL = "url";
+
+    public static final String EXTRA = "extra";
+
 }

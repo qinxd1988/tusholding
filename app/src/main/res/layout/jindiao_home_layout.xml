@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/replace_layout"
-        android:layout_above="@+id/tab_btn_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_btn_group"/>
 
     <RadioGroup
         android:id="@+id/tab_btn_group"
@@ -21,54 +21,58 @@
         <RadioButton
             android:id="@+id/tab_home_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="3dp"
             android:drawableTop="@drawable/home_selector"
             android:gravity="center"
+            android:paddingTop="5dp"
             android:text="首页"
             android:textColor="@color/tab_color_selector"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <RadioButton
             android:id="@+id/tab_information_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="3dp"
             android:drawableTop="@drawable/information_selector"
             android:gravity="center"
+            android:paddingTop="5dp"
             android:text="咨询"
             android:textColor="@color/tab_color_selector"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <RadioButton
             android:id="@+id/tab_ganhuo_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="3dp"
             android:drawableTop="@drawable/ganhuo_selector"
             android:gravity="center"
+            android:paddingTop="5dp"
             android:text="干货"
             android:textColor="@color/tab_color_selector"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <RadioButton
             android:id="@+id/tab_my_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="3dp"
             android:drawableTop="@drawable/my_selector"
             android:gravity="center"
+            android:paddingTop="5dp"
             android:text="我的"
             android:textColor="@color/tab_color_selector"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
     </RadioGroup>
 

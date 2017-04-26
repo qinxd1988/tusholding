@@ -122,6 +122,8 @@ public class HomeFragment extends BaseFragment {
 
         module1.title = "一键尽调";
 
+        module1.isNeedLogin = true;
+
         module1.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_yijianjindiao;
 
         module1.linkUrl = "";

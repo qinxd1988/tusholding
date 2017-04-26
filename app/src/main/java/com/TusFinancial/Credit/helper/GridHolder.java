@@ -155,7 +155,7 @@ public class GridHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void onClick(View v) {
 
-                            TransferHelper.onTransfer(mContext, module.linkUrl);
+                            TransferHelper.onTransfer(mContext, module.linkUrl, module.isNeedLogin);
 
                         }
                     });
@@ -261,7 +261,7 @@ public class GridHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void onClick(View v) {
 
-                            TransferHelper.onTransfer(mContext, module.linkUrl);
+                            TransferHelper.onTransfer(mContext, module.linkUrl, module.isNeedLogin);
 
                         }
                     });

@@ -1,7 +1,9 @@
 package com.base.qinxd.library.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.qinxd.library.R;
+import com.base.qinxd.library.ui.fragment.BaseFragment;
 
 /**
  * Created by xd on 2017/4/21.
@@ -23,9 +26,15 @@ public abstract class BaseImpActivity extends BaseActivity {
 
     public RelativeLayout parentLayout;
 
+    public FragmentManager mFragmentManager;
+
+    protected BaseFragment mFragment;
+
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFragmentManager = getSupportFragmentManager();
 
         initData(savedInstanceState);
 
@@ -97,4 +106,24 @@ public abstract class BaseImpActivity extends BaseActivity {
 
     }
 
+    public void operateFragment(BaseFragment fragment, int resId) {
+
+        mFragmentManager.beginTransaction()
+                .replace(resId, fragment)
+                .disallowAddToBackStack()
+                .commitAllowingStateLoss();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (mFragment != null) {
+
+            mFragment.onActivityResult(requestCode, resultCode, data);
+
+        }
+
+    }
 }

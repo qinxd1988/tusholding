@@ -17,4 +17,6 @@ public class ModuleBean {
 
     public String linkUrl;
 
+    public boolean isNeedLogin;
+
 }

@@ -49,6 +49,7 @@ public class BrowseFragment extends BaseFragment {
 
         Bundle bundle = getArguments();
 
+        //测试提交
         if (bundle != null) {
 
             mUrl = bundle.getString(Constants.URL);

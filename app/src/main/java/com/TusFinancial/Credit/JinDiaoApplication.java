@@ -19,11 +19,8 @@ public class JinDiaoApplication extends Application {
 
     public static String TOKEN;
 
-<<<<<<< HEAD
     //测试化境是否成功
 
-=======
->>>>>>> c65c105b0a815261f98d09aee3b5791a82e052db
     @Override
     public void onCreate() {
         super.onCreate();

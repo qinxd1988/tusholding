@@ -161,8 +161,6 @@ public class RegisterActivity extends BaseImpActivity {
 
                             Logger.e("code ---> " + entity.code);
 
-                            Logger.e("data ---> " + entity.data);
-
                         }
 
                     }

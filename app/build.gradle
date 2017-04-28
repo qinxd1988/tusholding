@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
+    signingConfigs {
+        realse {
+            keyAlias 'qidi_jindiao'
+            keyPassword 'com.qidi.app'
+            storeFile file(project.KEYSTORE_PATH)
+            storePassword 'jindiaoapp'
+            v2SigningEnabled false
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -25,7 +34,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
     compile project(':library')

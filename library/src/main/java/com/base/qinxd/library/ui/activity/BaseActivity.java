@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.base.qinxd.library.utils.HttpUtils;
 import com.base.qinxd.library.widget.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -107,6 +108,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        HttpUtils.cancel(this);
 
         if (mEventBus != null) {
 

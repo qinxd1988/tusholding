@@ -2,6 +2,8 @@ package com.TusFinancial.Credit.loginRegister.ui.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
@@ -55,6 +57,43 @@ public class RegisterActivity extends BaseImpActivity {
     AppCompatTextView sendCodeText;
 
     SharedPreferences spfs;
+
+    private int count = 60;
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (count > 0) {
+
+                if (sendCodeText != null) {
+
+                    sendCodeText.setText(count + "秒后重发");
+
+                }
+
+                mHandler.sendEmptyMessageDelayed(0, 1000);
+
+                count--;
+
+            } else {
+
+                count = 60;
+
+                if (sendCodeText != null) {
+
+                    sendCodeText.setEnabled(true);
+
+                    sendCodeText.setText("发送验证码");
+
+                }
+
+            }
+
+        }
+
+    };
 
     @Override
     public int getLayoutResId() {
@@ -169,6 +208,8 @@ public class RegisterActivity extends BaseImpActivity {
 
                         if (entity != null) {
 
+                            mHandler.sendEmptyMessage(0);
+
                             ToastUtils.showToast(RegisterActivity.this, entity.msg);
 
                         }
@@ -185,6 +226,8 @@ public class RegisterActivity extends BaseImpActivity {
 
                     }
                 });
+
+        sendCodeText.setEnabled(false);
 
         api.enqueue();
 
@@ -259,6 +302,20 @@ public class RegisterActivity extends BaseImpActivity {
                 });
 
         api.enqueue();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mHandler != null) {
+
+            mHandler.removeCallbacksAndMessages(null);
+
+            mHandler = null;
+
+        }
 
     }
 

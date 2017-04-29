@@ -2,6 +2,7 @@ package com.TusFinancial.Credit.browse.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.browse.ui.fragment.BrowseFragment;
@@ -40,19 +41,40 @@ public class BrowseActivity extends BaseImpActivity {
 
         mToolbar.setBackgroundResource(R.color.color_373b3e);
 
-        if(mFragment == null){
+        if (mFragment == null) {
 
             mFragment = BrowseFragment.newInstance(url);
 
         }
 
-        operateFragment(mFragment,R.id.jindiao_replace_layout);
+        operateFragment(mFragment, R.id.jindiao_replace_layout);
 
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
 
         mTitleTextView.setText(title);
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        boolean flag = false;
+
+        if (mFragment != null) {
+
+            flag = mFragment.onKeyDown(keyCode, event);
+
+        }
+
+        if (flag) {
+
+            return true;
+
+        }
+
+        return super.onKeyDown(keyCode, event);
 
     }
 

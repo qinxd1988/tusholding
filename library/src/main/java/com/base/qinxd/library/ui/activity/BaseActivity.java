@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.base.qinxd.library.widget.LoadingDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * 作者：qinxudong
  * <p/>
@@ -20,9 +22,28 @@ public class BaseActivity extends AppCompatActivity {
 
     private LoadingDialog mLoadingDialog;
 
+    private EventBus mEventBus;
+
+    private boolean isSupportEventBus;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (isSupportEventBus()) {
+
+            mEventBus = EventBus.getDefault();
+
+            mEventBus.register(this);
+
+        }
+
+    }
+
+    public boolean isSupportEventBus() {
+
+        return false;
+
     }
 
     public void showLoading() {
@@ -83,4 +104,15 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mEventBus != null) {
+
+            mEventBus.unregister(this);
+
+        }
+
+    }
 }

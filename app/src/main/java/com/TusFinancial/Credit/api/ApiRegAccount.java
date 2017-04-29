@@ -3,7 +3,7 @@ package com.TusFinancial.Credit.api;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.base.qinxd.library.entity.BaseEntity;
+import com.TusFinancial.Credit.entity.RegisterEntity;
 import com.base.qinxd.library.network.Api;
 import com.base.qinxd.library.network.ApiRequest;
 
@@ -18,7 +18,7 @@ import retrofit2.http.POST;
  * Created by xd on 2017/4/23.
  */
 
-public class ApiRegAccount extends Api<BaseEntity> {
+public class ApiRegAccount extends Api<RegisterEntity> {
 
     ApiStore mApiStore;
 
@@ -87,7 +87,7 @@ public class ApiRegAccount extends Api<BaseEntity> {
     }
 
     @Override
-    public final Call<BaseEntity> call() {
+    public final Call<RegisterEntity> call() {
 
         return mApiStore.regAccount(postParams());
 
@@ -97,7 +97,7 @@ public class ApiRegAccount extends Api<BaseEntity> {
 
         @FormUrlEncoded
         @POST("/regist/regAccount.shtml")
-        Call<BaseEntity> regAccount(@FieldMap Map<String, String> postParams);
+        Call<RegisterEntity> regAccount(@FieldMap Map<String, String> postParams);
 
     }
 

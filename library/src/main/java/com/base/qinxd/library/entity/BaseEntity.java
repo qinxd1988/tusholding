@@ -1,7 +1,5 @@
 package com.base.qinxd.library.entity;
 
-import com.google.gson.JsonObject;
-
 import java.io.Serializable;
 
 /**
@@ -18,6 +16,10 @@ public class BaseEntity implements Serializable {
     public String code;
 
     public String msg;
+
+    public boolean successful;
+
+    public String doing;
 
     public boolean isSuccess() {
 

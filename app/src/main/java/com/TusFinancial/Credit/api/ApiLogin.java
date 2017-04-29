@@ -3,7 +3,7 @@ package com.TusFinancial.Credit.api;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.base.qinxd.library.entity.BaseEntity;
+import com.TusFinancial.Credit.entity.LoginEntity;
 import com.base.qinxd.library.network.Api;
 import com.base.qinxd.library.network.ApiRequest;
 
@@ -24,7 +24,7 @@ import retrofit2.http.POST;
  * <p/>
  * 描述：
  */
-public class ApiLogin extends Api<BaseEntity> {
+public class ApiLogin extends Api<LoginEntity> {
 
     private ApiStore mApiStore;
 
@@ -78,7 +78,7 @@ public class ApiLogin extends Api<BaseEntity> {
     }
 
     @Override
-    public final Call<BaseEntity> call() {
+    public final Call<LoginEntity> call() {
 
         return mApiStore.login(postParams());
 
@@ -88,7 +88,7 @@ public class ApiLogin extends Api<BaseEntity> {
 
         @FormUrlEncoded
         @POST("/login/userLogin.shtml")
-        Call<BaseEntity> login(@FieldMap Map<String, String> postParams);
+        Call<LoginEntity> login(@FieldMap Map<String, String> postParams);
 
     }
 

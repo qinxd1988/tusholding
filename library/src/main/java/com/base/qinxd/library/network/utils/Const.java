@@ -13,4 +13,6 @@ public class Const {
 
     public final static String BASE_URL = "http://113.208.118.59:9115";
 
+    public final static String GANHUO_URL = "http://wxfacab687403a1c92.mp.weixinhost.com/addon/material?a=show&id=855298588606074880&sid=855298588664823808";
+
 }

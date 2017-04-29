@@ -17,6 +17,7 @@ import com.TusFinancial.Credit.bean.ModuleBean;
 import com.TusFinancial.Credit.bean.TemplateBean;
 import com.TusFinancial.Credit.main.adapter.HomeAdapter;
 import com.base.qinxd.library.image.ImageLoaderWrapper;
+import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -126,7 +127,7 @@ public class HomeFragment extends BaseFragment {
 
         module1.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_yijianjindiao;
 
-        module1.linkUrl = "";
+        module1.linkUrl = Const.BASE_URL + "/web/write/index.html?app=1&token=" + JinDiaoApplication.TOKEN;
 
         bean1.list.add(module1);
 
@@ -170,6 +171,8 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_pingji;
 
+                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=1&app=1";
+
                     break;
 
                 case 1:
@@ -177,6 +180,10 @@ public class HomeFragment extends BaseFragment {
                     module.title = "查舆情";
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_yuqing;
+
+                    module.isNeedLogin = true;
+
+                    module.linkUrl = Const.BASE_URL + "/web/web/publicoption.html?app=1&token=" + JinDiaoApplication.TOKEN;
 
                     break;
 
@@ -186,6 +193,10 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_shoucheng;
 
+                    module.isNeedLogin = true;
+
+                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=0&app=1&token=" + JinDiaoApplication.TOKEN;
+
                     break;
 
                 case 3:
@@ -193,6 +204,8 @@ public class HomeFragment extends BaseFragment {
                     module.title = "查纳税";
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_nashui;
+
+                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=2&app=1";
 
                     break;
 
@@ -202,6 +215,8 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_sifa;
 
+                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=5&app=1";
+
                     break;
 
                 case 5:
@@ -210,6 +225,8 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_tiexianlilv;
 
+                    module.linkUrl = Const.BASE_URL + "/web/web/shibor.html?app=1";
+
                     break;
 
                 case 6:
@@ -217,6 +234,10 @@ public class HomeFragment extends BaseFragment {
                     module.title = "企业排名";
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_qiyepaiming;
+
+                    module.isNeedLogin = true;
+
+                    module.linkUrl = Const.BASE_URL + "/web/web/toppage.html?app=1&token=" + JinDiaoApplication.TOKEN;
 
                     break;
 

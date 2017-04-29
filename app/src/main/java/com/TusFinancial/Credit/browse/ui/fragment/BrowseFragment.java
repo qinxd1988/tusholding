@@ -3,6 +3,7 @@ package com.TusFinancial.Credit.browse.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,25 @@ public class BrowseFragment extends BaseFragment {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (mWebView.canGoBack()) {
+
+                mWebView.goBack();
+
+                return true;
+
+            }
+
+        }
+
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -130,4 +150,5 @@ public class BrowseFragment extends BaseFragment {
         }
 
     }
+
 }

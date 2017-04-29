@@ -15,4 +15,8 @@ public class Constants {
 
     public static final String EXTRA = "extra";
 
+    public static final String TOKEN = "token";
+
+    public static final String MOBILE = "mobile";
+
 }

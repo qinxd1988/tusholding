@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 作者：qinxudong
@@ -29,6 +31,8 @@ public class BaseFragment extends Fragment {
      * 懒加载
      */
     protected boolean isLazyLoad;
+
+    protected EventBus mEventBus;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -73,6 +77,17 @@ public class BaseFragment extends Fragment {
 
     }
 
+    /**
+     * 是否支持事件订阅
+     *
+     * @return
+     */
+    protected boolean isSupportEventBus() {
+
+        return false;
+
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -81,6 +96,15 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (isSupportEventBus()) {
+
+            mEventBus = EventBus.getDefault();
+
+            mEventBus.register(this);
+
+        }
+
     }
 
     @Nullable
@@ -92,11 +116,25 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        return false;
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        if (mEventBus != null) {
+
+            mEventBus.unregister(this);
+
+        }
+
     }
 
 }

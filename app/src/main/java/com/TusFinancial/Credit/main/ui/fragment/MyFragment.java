@@ -2,9 +2,11 @@ package com.TusFinancial.Credit.main.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
+import com.TusFinancial.Credit.event.LoginFinishEvent;
+import com.TusFinancial.Credit.event.LoginOutEvent;
 import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.loginRegister.ui.activity.LoginActivity;
 import com.TusFinancial.Credit.loginRegister.ui.activity.RegisterActivity;
+import com.TusFinancial.Credit.utils.Constants;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +98,13 @@ public class MyFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isSupportEventBus() {
+
+        return true;
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -108,6 +124,47 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (!TextUtils.isEmpty(JinDiaoApplication.TOKEN)
+                && !TextUtils.isEmpty(JinDiaoApplication.MOBILE)) {
+
+            mMyLoginRegisterLayout.setVisibility(View.GONE);
+
+            mMyNameText.setVisibility(View.VISIBLE);
+
+            mMyNameText.setText(JinDiaoApplication.MOBILE);
+
+        } else {
+
+            mMyLoginRegisterLayout.setVisibility(View.VISIBLE);
+
+            mMyNameText.setVisibility(View.GONE);
+
+            mMyNameText.setText(JinDiaoApplication.MOBILE);
+
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginFinishEvent event) {
+
+        mMyLoginRegisterLayout.setVisibility(View.GONE);
+
+        mMyNameText.setVisibility(View.VISIBLE);
+
+        mMyNameText.setText(JinDiaoApplication.MOBILE);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginOutEvent event) {
+
+        mMyLoginRegisterLayout.setVisibility(View.VISIBLE);
+
+        mMyNameText.setVisibility(View.GONE);
+
+        mMyNameText.setText(JinDiaoApplication.MOBILE);
 
     }
 
@@ -164,13 +221,41 @@ public class MyFragment extends BaseFragment {
 
         }
 
+        url = operateUrl(url);
+
         TransferHelper.onTransfer(getContext(), url, true);
+
+    }
+
+    private String operateUrl(String url) {
+
+        if (url.contains("&token=")) {
+
+            Uri uri = Uri.parse(url);
+
+            String data = uri.getQueryParameter(Constants.TOKEN);
+
+            //使用本地token值替换
+            if (TextUtils.isEmpty(data)) {
+
+                url = url.replace("&token=", "&token=" + JinDiaoApplication.TOKEN);
+
+            } else {
+
+                url = url.replace(data, JinDiaoApplication.TOKEN);
+
+            }
+
+        }
+
+        return url;
 
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
     }
 
 }

@@ -15,7 +15,7 @@ public interface ApiCallBack<T> {
     void onSuccess(T response);
     // 请求数据错误
 
-    void onError(String err_msg);
+    void onError(T response, String err_msg);
 
     // 网络请求失败
     void onFailure();

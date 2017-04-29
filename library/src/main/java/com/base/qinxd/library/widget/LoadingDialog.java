@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.base.qinxd.library.R;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.SpriteFactory;
+import com.github.ybq.android.spinkit.Style;
+import com.github.ybq.android.spinkit.sprite.Sprite;
 
 
 /**
@@ -43,6 +47,12 @@ public class LoadingDialog extends Dialog implements DialogInterface.OnDismissLi
 //        lp.dimAmount = 0f;
 
         setContentView(R.layout.base_loading_dialog_layout);
+
+        Sprite drawable = SpriteFactory.create(Style.CIRCLE);
+
+        SpinKitView spinKitView = (SpinKitView) findViewById(R.id.spin_kit_view);
+
+        spinKitView.setIndeterminateDrawable(drawable);
 
     }
 

@@ -41,6 +41,7 @@
         <activity
             android:name=".loginRegister.ui.activity.LoginActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
@@ -80,7 +81,13 @@
             android:theme="@style/AppTheme.Login">
 
         </activity>
-        <activity android:name=".browse.ui.activity.BrowseActivity"/>
+
+        <!-- 浏览器 -->
+        <activity
+            android:name=".browse.ui.activity.BrowseActivity"
+            android:theme="@style/AppTheme.Login">
+
+        </activity>
 
 
     </application>

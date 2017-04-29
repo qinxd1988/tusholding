@@ -5,14 +5,17 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.TusFinancial.Credit.R;
+import com.TusFinancial.Credit.browse.ui.fragment.BrowseFragment;
 import com.TusFinancial.Credit.main.ui.fragment.GanHuoFragment;
 import com.TusFinancial.Credit.main.ui.fragment.HomeFragment;
 import com.TusFinancial.Credit.main.ui.fragment.InformationFragment;
 import com.TusFinancial.Credit.main.ui.fragment.MyFragment;
+import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.activity.BaseActivity;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 
@@ -52,6 +55,8 @@ public class HomeActivity extends BaseActivity {
     private Map<Integer, BaseFragment> fragmentMap = new HashMap<>();
 
     FragmentManager fragmentManager;
+
+    private Fragment mFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +104,7 @@ public class HomeActivity extends BaseActivity {
 
                 case R.id.tab_ganhuo_btn:
 
-                    fragment = GanHuoFragment.newInstance();
+                    fragment = BrowseFragment.newInstance(Const.GANHUO_URL);
 
                     break;
 
@@ -133,6 +138,8 @@ public class HomeActivity extends BaseActivity {
 
                 }
 
+                mFragment = fragment;
+
                 fragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
 
                 return;
@@ -145,6 +152,8 @@ public class HomeActivity extends BaseActivity {
 
             fragmentMap.put(resId, fragment);
 
+            mFragment = fragment;
+
             fragmentManager
                     .beginTransaction()
                     .add(R.id.replace_layout, fragment)
@@ -155,4 +164,21 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (mFragment instanceof BrowseFragment) {
+
+                ((BrowseFragment) mFragment).onKeyDown(keyCode, event);
+
+                return true;
+
+            }
+
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
 }

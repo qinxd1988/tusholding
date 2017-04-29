@@ -1,20 +1,28 @@
 package com.TusFinancial.Credit.loginRegister.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.api.ApiRegAccount;
 import com.TusFinancial.Credit.api.ApiSendVeirfyCode;
+import com.TusFinancial.Credit.bean.LoginBean;
+import com.TusFinancial.Credit.entity.RegisterEntity;
+import com.TusFinancial.Credit.event.LoginFinishEvent;
+import com.TusFinancial.Credit.utils.Constants;
 import com.base.qinxd.library.entity.BaseEntity;
 import com.base.qinxd.library.network.ApiCallBack;
 import com.base.qinxd.library.ui.activity.BaseImpActivity;
-import com.base.qinxd.library.utils.Logger;
 import com.base.qinxd.library.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +53,8 @@ public class RegisterActivity extends BaseImpActivity {
 
     @BindView(R.id.jindiao_register_send_code_text)
     AppCompatTextView sendCodeText;
+
+    SharedPreferences spfs;
 
     @Override
     public int getLayoutResId() {
@@ -159,16 +169,14 @@ public class RegisterActivity extends BaseImpActivity {
 
                         if (entity != null) {
 
-                            Logger.e("code ---> " + entity.code);
+                            ToastUtils.showToast(RegisterActivity.this, entity.msg);
 
                         }
 
                     }
 
                     @Override
-                    public void onError(String err_msg) {
-
-                        Logger.e("err_msg ---> " + err_msg);
+                    public void onError(BaseEntity entity, String err_msg) {
 
                     }
 
@@ -184,7 +192,7 @@ public class RegisterActivity extends BaseImpActivity {
 
     private void register() {
 
-        String mobile = mobileEditText.getText().toString().trim();
+        final String mobile = mobileEditText.getText().toString().trim();
 
         String code = codeEditText.getText().toString().trim();
 
@@ -195,15 +203,51 @@ public class RegisterActivity extends BaseImpActivity {
         api.setPassword(password)
                 .setPhone(mobile)
                 .setPhoneVerify(code)
-                .setShowLoading(true)
-                .setApiCallBack(new ApiCallBack<BaseEntity>() {
+                .setApiCallBack(new ApiCallBack<RegisterEntity>() {
                     @Override
-                    public void onSuccess(BaseEntity response) {
+                    public void onSuccess(RegisterEntity response) {
+
+                        if (response != null && response.data != null) {
+
+                            if (!TextUtils.isEmpty(response.data)) {
+
+                                if (spfs == null) {
+
+                                    spfs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                                }
+
+                                //写入文件
+                                spfs.edit().putString(Constants.TOKEN, response.data).commit();
+
+                                spfs.edit().putString(Constants.MOBILE, mobile).commit();
+
+                                //将token赋值全局变量
+                                JinDiaoApplication.TOKEN = response.data;
+
+                                JinDiaoApplication.MOBILE = mobile;
+
+                            }
+
+                            LoginFinishEvent event = new LoginFinishEvent();
+
+                            LoginBean bean = new LoginBean();
+
+                            bean.token = response.data;
+
+                            event.bean = bean;
+
+                            //发送登录成功订阅事件
+                            EventBus.getDefault().post(event);
+
+                            finish();
+
+                        }
 
                     }
 
                     @Override
-                    public void onError(String err_msg) {
+                    public void onError(RegisterEntity entity, String err_msg) {
 
                     }
 

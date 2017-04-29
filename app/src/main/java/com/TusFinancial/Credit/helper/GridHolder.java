@@ -2,6 +2,7 @@ package com.TusFinancial.Credit.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.bean.ModuleBean;
 import com.TusFinancial.Credit.bean.TemplateBean;
+import com.TusFinancial.Credit.utils.Constants;
 import com.base.qinxd.library.image.DisplayOption;
 import com.base.qinxd.library.image.ImageLoaderFactory;
 import com.base.qinxd.library.image.SimpleImageLoadingListener;
@@ -155,7 +157,9 @@ public class GridHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void onClick(View v) {
 
-                            TransferHelper.onTransfer(mContext, module.linkUrl, module.isNeedLogin);
+                            String url = operateUrl(module.linkUrl);
+
+                            TransferHelper.onTransfer(mContext, url, module.isNeedLogin);
 
                         }
                     });
@@ -261,7 +265,9 @@ public class GridHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void onClick(View v) {
 
-                            TransferHelper.onTransfer(mContext, module.linkUrl, module.isNeedLogin);
+                            String url = operateUrl(module.linkUrl);
+
+                            TransferHelper.onTransfer(mContext, url, module.isNeedLogin);
 
                         }
                     });
@@ -301,6 +307,31 @@ public class GridHolder extends RecyclerView.ViewHolder {
             }
 
         }
+
+    }
+
+    private String operateUrl(String url) {
+
+        if (url.contains("&token=")) {
+
+            Uri uri = Uri.parse(url);
+
+            String data = uri.getQueryParameter(Constants.TOKEN);
+
+            //使用本地token值替换
+            if (TextUtils.isEmpty(data)) {
+
+                url = url.replace("&token=", "&token=" + JinDiaoApplication.TOKEN);
+
+            } else {
+
+                url = url.replace(data, JinDiaoApplication.TOKEN);
+
+            }
+
+        }
+
+        return url;
 
     }
 

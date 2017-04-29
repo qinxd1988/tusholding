@@ -7,6 +7,7 @@ import com.base.qinxd.library.entity.BaseEntity;
 import com.base.qinxd.library.utils.ContextUtil;
 import com.base.qinxd.library.utils.HttpUtils;
 import com.base.qinxd.library.utils.Logger;
+import com.base.qinxd.library.utils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,9 @@ public abstract class Api<T> {
 
     protected ApiCallBack<T> mApiCallBack;
 
-    protected boolean isShowLoading;
+    protected boolean isShowLoading = true;
+
+    private boolean isShowErrorToast = true;
 
     private Callback<T> mCallBack = new Callback<T>() {
 
@@ -65,7 +68,21 @@ public abstract class Api<T> {
 
                 } else {
 
-                    mApiCallBack.onError(((BaseEntity) response.body()).msg);
+                    String msg = "";
+
+                    if (response.body() instanceof BaseEntity) {
+
+                        msg = ((BaseEntity) response.body()).msg;
+
+                        if (isShowErrorToast) {
+
+                            ToastUtils.showToast(mContext, msg);
+
+                        }
+
+                    }
+
+                    mApiCallBack.onError((T) response.body(), msg);
 
                 }
 
@@ -80,7 +97,7 @@ public abstract class Api<T> {
         @Override
         public void onFailure(Call<T> call, Throwable t) {
 
-            Logger.e("onFailure -----> "+t.getMessage());
+            Logger.e("onFailure -----> " + t.getMessage());
 
             dismissLoading();
 
@@ -149,6 +166,14 @@ public abstract class Api<T> {
     public Api setShowLoading(boolean isShowLoading) {
 
         this.isShowLoading = isShowLoading;
+
+        return this;
+
+    }
+
+    public Api setShowErrorToast(boolean isShowErrorToast) {
+
+        this.isShowErrorToast = isShowErrorToast;
 
         return this;
 

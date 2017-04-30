@@ -23,4 +23,9 @@ public class LoginBean {
 
     public String mobile;
 
+    /**
+     * 微信登录使用 当token为空或者null时，需要用户绑定手机号
+     */
+    public String openId;
+
 }

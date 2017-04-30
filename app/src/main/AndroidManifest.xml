@@ -68,6 +68,13 @@
 
         </activity>
 
+        <!-- 绑定手机 -->
+        <activity
+            android:name=".loginRegister.ui.activity.BindMobileActivity"
+            android:theme="@style/AppTheme.Login">
+
+        </activity>
+
         <!-- 忘记密码 -->
         <activity
             android:name=".loginRegister.ui.activity.ForgetPasswordActivity"

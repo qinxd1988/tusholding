@@ -104,7 +104,7 @@ public class LoginActivity extends BaseImpActivity {
         if (event != null) {
 
             //如果是网页需要登录的，登录后url直接替换登录后的token进行页面跳转
-            if (mData.startsWith("http")) {
+            if (mData != null && mData.startsWith("http")) {
 
                 mData = mData.replace("&token=", "&token=" + JinDiaoApplication.TOKEN);
 
@@ -269,8 +269,7 @@ public class LoginActivity extends BaseImpActivity {
 
                         if (response != null && response.data != null) {
 
-                            if (!TextUtils.isEmpty(mData)
-                                    && !TextUtils.isEmpty(response.data.token)) {
+                            if (!TextUtils.isEmpty(response.data.token)) {
 
                                 if (spfs == null) {
 
@@ -288,14 +287,14 @@ public class LoginActivity extends BaseImpActivity {
 
                                 JinDiaoApplication.MOBILE = mobile;
 
+                                LoginFinishEvent event = new LoginFinishEvent();
+
+                                event.bean = response.data;
+
+                                //发送登录成功订阅事件
+                                EventBus.getDefault().post(event);
+
                             }
-
-                            LoginFinishEvent event = new LoginFinishEvent();
-
-                            event.bean = response.data;
-
-                            //发送登录成功订阅事件
-                            EventBus.getDefault().post(event);
 
                         }
 
@@ -338,8 +337,7 @@ public class LoginActivity extends BaseImpActivity {
 
                         if (response != null && response.data != null) {
 
-                            if (!TextUtils.isEmpty(mData)
-                                    && !TextUtils.isEmpty(response.data.token)) {
+                            if (!TextUtils.isEmpty(response.data.token)) {
 
                                 if (spfs == null) {
 
@@ -353,14 +351,23 @@ public class LoginActivity extends BaseImpActivity {
                                 //将token赋值全局变量
                                 JinDiaoApplication.TOKEN = response.data.token;
 
+                                LoginFinishEvent event = new LoginFinishEvent();
+
+                                event.bean = response.data;
+
+                                //发送登录成功订阅事件
+                                EventBus.getDefault().post(event);
+
+                            } else if (!TextUtils.isEmpty(response.data.openId)) {
+
+                                //需要用户绑定手机号
+                                Intent intent = new Intent(LoginActivity.this, BindMobileActivity.class);
+
+                                intent.putExtra(Constants.EXTRA, response.data.openId);
+
+                                startActivity(intent);
+
                             }
-
-                            LoginFinishEvent event = new LoginFinishEvent();
-
-                            event.bean = response.data;
-
-                            //发送登录成功订阅事件
-                            EventBus.getDefault().post(event);
 
                         }
 

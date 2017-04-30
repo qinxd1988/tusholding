@@ -86,6 +86,12 @@ public class HomeActivity extends BaseActivity {
 
         BaseFragment fragment = fragmentMap.get(resId);
 
+        if (fragment != null && mFragment == fragment) {
+
+            fragment.autoRefresh();
+
+        }
+
         if (fragment == null) {
 
             switch (resId) {
@@ -180,5 +186,7 @@ public class HomeActivity extends BaseActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+
     }
+
 }

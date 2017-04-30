@@ -71,6 +71,14 @@ public class BaseFragment extends Fragment {
     }
 
     /**
+     * 刷新数据
+     */
+    public void autoRefresh() {
+
+
+    }
+
+    /**
      * 懒加载
      */
     protected void lazyLoad() {

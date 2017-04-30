@@ -11,6 +11,6 @@ package com.TusFinancial.Credit.utils;
  */
 public class ThirdConfig {
 
-    public static final String WENWAN_WEIXIN_APPID = "";
+    public static final String WENWAN_WEIXIN_APPID = "wxf49537caabd6f217";
 
 }

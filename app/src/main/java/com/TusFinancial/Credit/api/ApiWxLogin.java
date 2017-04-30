@@ -61,7 +61,7 @@ public class ApiWxLogin extends Api<LoginEntity> {
     private interface ApiStore {
 
         @FormUrlEncoded
-        @POST("/wx/login.shtm")
+        @POST("/wx/login.shtml")
         Call<LoginEntity> wxLogin(@FieldMap Map<String, String> postParams);
 
     }

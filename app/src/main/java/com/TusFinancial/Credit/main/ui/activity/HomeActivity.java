@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：qinxudong
@@ -68,17 +70,9 @@ public class HomeActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        btnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-
-                fragmentOperate(checkedId);
-
-            }
-
-        });
-
         homeBtn.setChecked(true);
+
+        fragmentOperate(R.id.tab_home_btn);
 
     }
 
@@ -167,6 +161,15 @@ public class HomeActivity extends BaseActivity {
                     .commitAllowingStateLoss();
 
         }
+
+    }
+
+    @OnClick({R.id.tab_home_btn, R.id.tab_information_btn, R.id.tab_ganhuo_btn, R.id.tab_my_btn})
+    void onClick(View view) {
+
+        int resId = view.getId();
+
+        fragmentOperate(resId);
 
     }
 

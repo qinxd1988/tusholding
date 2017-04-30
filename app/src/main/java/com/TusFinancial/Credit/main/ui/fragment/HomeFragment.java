@@ -50,6 +50,8 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.home_recycler_view)
     RecyclerView mRecyclerView;
 
+    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener;
+
     HomeAdapter mAdapter;
 
     LinearLayoutManager manager;
@@ -265,7 +267,6 @@ public class HomeFragment extends BaseFragment {
 
         mAdapter.refreshContentList(mList);
 
-
     }
 
     @Nullable
@@ -324,8 +325,7 @@ public class HomeFragment extends BaseFragment {
         // 设置下拉进度的主题颜色
         mRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
 
-        // 下拉时触发SwipeRefreshLayout的下拉动画，动画完毕之后就会回调这个方法
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
@@ -354,9 +354,12 @@ public class HomeFragment extends BaseFragment {
 
                 // 这个不能写在外边，不然会直接收起来
                 //swipeRefreshLayout.setRefreshing(false);
-            }
 
-        });
+            }
+        };
+
+        // 下拉时触发SwipeRefreshLayout的下拉动画，动画完毕之后就会回调这个方法
+        mRefreshLayout.setOnRefreshListener(mOnRefreshListener);
 
     }
 
@@ -366,13 +369,15 @@ public class HomeFragment extends BaseFragment {
 
         if (mRefreshLayout != null) {
 
-            mRefreshLayout.setEnabled(true);
-
             mRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
 
+                    mRefreshLayout.setEnabled(true);
+
                     mRefreshLayout.setRefreshing(true);
+
+                    mOnRefreshListener.onRefresh();
 
                 }
 

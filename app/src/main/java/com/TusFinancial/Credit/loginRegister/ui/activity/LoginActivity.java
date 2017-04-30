@@ -12,13 +12,18 @@ import android.view.View;
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.api.ApiLogin;
+import com.TusFinancial.Credit.api.ApiWxLogin;
 import com.TusFinancial.Credit.entity.LoginEntity;
 import com.TusFinancial.Credit.event.LoginFinishEvent;
 import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.utils.Constants;
+import com.TusFinancial.Credit.utils.ThirdConfig;
 import com.base.qinxd.library.network.ApiCallBack;
 import com.base.qinxd.library.ui.activity.BaseImpActivity;
 import com.base.qinxd.library.utils.ToastUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +54,8 @@ public class LoginActivity extends BaseImpActivity {
 
     SharedPreferences spfs;
 
+    private IWXAPI api;
+
     @Override
     public int getLayoutResId() {
         return R.layout.jindiao_login_layout;
@@ -58,6 +65,10 @@ public class LoginActivity extends BaseImpActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
 
         initIntentData(getIntent());
+
+        api = WXAPIFactory.createWXAPI(this, ThirdConfig.WENWAN_WEIXIN_APPID);
+
+        api.registerApp(ThirdConfig.WENWAN_WEIXIN_APPID);
 
     }
 
@@ -148,10 +159,41 @@ public class LoginActivity extends BaseImpActivity {
 
             case R.id.jindiao_wechat_login_text:
 
+                if (api.isWXAppInstalled()) {
+
+                    if (api.isWXAppSupportAPI()) {
+
+                        thirdLogin();
+
+                    } else {
+
+                        ToastUtils.showToast(this, "您当前微信不支持该功能！");
+
+                    }
+
+                } else {
+
+                    ToastUtils.showToast(this, "您没有安装微信！");
+
+                }
 
                 break;
 
         }
+
+    }
+
+    private void thirdLogin() {
+
+        showLoading();
+
+        final SendAuth.Req req = new SendAuth.Req();
+
+        req.scope = "snsapi_userinfo";
+
+        req.state = "none";
+
+        api.sendReq(req);
 
     }
 
@@ -193,6 +235,21 @@ public class LoginActivity extends BaseImpActivity {
         }
 
         return true;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //微信授权登录成功后，登录
+        if (!TextUtils.isEmpty(JinDiaoApplication.WECHAT_CODE)) {
+
+            wxLogin();
+
+            JinDiaoApplication.WECHAT_CODE = "";
+
+        }
 
     }
 
@@ -267,6 +324,60 @@ public class LoginActivity extends BaseImpActivity {
                 });
 
         apiLogin.enqueue();
+
+    }
+
+    private void wxLogin() {
+
+        ApiWxLogin api = new ApiWxLogin(this);
+
+        api.setCode(JinDiaoApplication.WECHAT_CODE)
+                .setApiCallBack(new ApiCallBack<LoginEntity>() {
+                    @Override
+                    public void onSuccess(LoginEntity response) {
+
+                        if (response != null && response.data != null) {
+
+                            if (!TextUtils.isEmpty(mData)
+                                    && !TextUtils.isEmpty(response.data.token)) {
+
+                                if (spfs == null) {
+
+                                    spfs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                                }
+
+                                //写入文件
+                                spfs.edit().putString(Constants.TOKEN, response.data.token).commit();
+
+                                //将token赋值全局变量
+                                JinDiaoApplication.TOKEN = response.data.token;
+
+                            }
+
+                            LoginFinishEvent event = new LoginFinishEvent();
+
+                            event.bean = response.data;
+
+                            //发送登录成功订阅事件
+                            EventBus.getDefault().post(event);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(LoginEntity response, String err_msg) {
+
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+
+        api.enqueue();
 
     }
 

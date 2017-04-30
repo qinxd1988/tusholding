@@ -26,6 +26,8 @@ public class JinDiaoApplication extends Application {
 
     public static String MOBILE = "";
 
+    public static String WECHAT_CODE = "";
+
     SharedPreferences spfs;
 
     //测试化境是否成功

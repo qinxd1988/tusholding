@@ -25,8 +25,6 @@ public class BaseActivity extends AppCompatActivity {
 
     private EventBus mEventBus;
 
-    private boolean isSupportEventBus;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

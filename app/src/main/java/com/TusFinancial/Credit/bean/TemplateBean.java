@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by xd on 2017/4/25.
  */
 
-public class TemplateBean {
+public class TemplateBean extends BaseBean{
 
     public int type;
 

@@ -1,8 +1,10 @@
 package com.TusFinancial.Credit.browse.ui.fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,19 @@ import android.view.ViewGroup;
 
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.browse.ui.activity.BrowseActivity;
+import com.TusFinancial.Credit.event.LoginFinishEvent;
+import com.TusFinancial.Credit.event.LoginOutEvent;
+import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.utils.Constants;
 import com.TusFinancial.Credit.x5web.X5WebView;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 import com.base.qinxd.library.utils.ContextUtil;
+import com.google.gson.JsonObject;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 作者：qinxudong
@@ -30,6 +41,8 @@ public class BrowseFragment extends BaseFragment {
 
     X5WebView mWebView;
 
+    private String mCallBack;
+
     public static BrowseFragment newInstance(String url) {
 
         Bundle bundle = new Bundle();
@@ -42,6 +55,11 @@ public class BrowseFragment extends BaseFragment {
 
         return fragment;
 
+    }
+
+    @Override
+    protected boolean isSupportEventBus() {
+        return true;
     }
 
     @Override
@@ -85,7 +103,63 @@ public class BrowseFragment extends BaseFragment {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginFinishEvent event) {
+
+        if (event != null && !TextUtils.isEmpty(mCallBack)) {
+
+            if (mWebView != null) {
+
+                JsonObject object = new JsonObject();
+
+                object.addProperty("status", 1);
+
+                object.addProperty("result", "null");
+
+                String data = Uri.encode(object.toString());
+
+                mWebView.loadUrl("javascript:window.tusAppBridge.notify({callback:" + mCallBack + ", data:" + data + "})");
+
+            }
+
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginOutEvent event) {
+
+
+    }
+
     private void initX5WebView() {
+
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                if (!TextUtils.isEmpty(url)) {
+
+                    if (url.startsWith("http")) {
+
+                        return super.shouldOverrideUrlLoading(view, url);
+
+                    } else {
+
+                        mCallBack = TransferHelper.overrideUrl(getContext(), url);
+
+                        return true;
+
+                    }
+
+                }
+
+                return super.shouldOverrideUrlLoading(view, url);
+
+            }
+
+        });
 
         mWebView.setOnReceivedTitleListener(new X5WebView.OnReceivedTitleListener() {
             @Override

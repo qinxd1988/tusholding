@@ -9,7 +9,7 @@ package com.TusFinancial.Credit.bean;
  * <p/>
  * 描述：
  */
-public class LoginBean {
+public class LoginBean extends BaseBean{
 
     /**
      * 登录成功令牌

@@ -80,4 +80,78 @@ public class TransferHelper {
 
     }
 
+    /**
+     * webview 重定向url处理逻辑
+     * <p>
+     * tusc://websdk?action=login&params={json}&callback=xxxxx
+     * tusc://native?pageName=XXXX&url=URLEncode(XXX)&key=xxxx
+     *
+     * @param url
+     */
+    public static String overrideUrl(Context context, String url) {
+
+        String callback = "";
+
+        if (!TextUtils.isEmpty(url)) {
+
+            Uri uri = Uri.parse(url);
+
+            String host = "";
+
+            String query = uri.getQuery();
+
+            String replace = "";
+
+            if (uri.getHost().equals("native")) {//调用本地页面逻辑
+
+                host = uri.getQueryParameter("pageName");
+
+                replace = "pageName=" + host;
+
+            } else if (uri.getHost().equals("websdk")) {
+
+                //tusc://websdk?action=login&params={json}&callback=xxxxx
+
+                host = uri.getQueryParameter("action");
+
+                replace = "action=" + host;
+
+                callback = uri.getQueryParameter("callback");
+
+            }
+
+            if (!TextUtils.isEmpty(query)) {
+
+                if (query.contains("&" + replace)) {
+
+                    query = query.replace("&" + replace, "");
+
+                } else if (query.contains(replace)) {
+
+                    query = query.replace(replace, "");
+
+                }
+
+            }
+
+            if (!TextUtils.isEmpty(host) && context != null) {
+
+                String newUrl = "jindiao://" + host;
+
+                if (!TextUtils.isEmpty(query)) {
+
+                    newUrl += ("?" + query);
+
+                }
+
+                onTransfer(context, newUrl, false);
+
+            }
+
+        }
+
+        return callback;
+
+    }
+
 }

@@ -9,7 +9,7 @@ package com.TusFinancial.Credit.bean;
  * <p/>
  * 描述：
  */
-public class ModuleBean {
+public class ModuleBean extends BaseBean{
 
     public String title;
 

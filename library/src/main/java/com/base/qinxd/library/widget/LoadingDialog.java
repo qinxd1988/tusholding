@@ -2,7 +2,6 @@ package com.base.qinxd.library.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
@@ -19,7 +18,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
  * @name com.wenwanmi.library.widget.LoadingDialog.java
  * @time 2015年3月19日 下午3:49:10
  */
-public class LoadingDialog extends Dialog implements DialogInterface.OnDismissListener {
+public class LoadingDialog extends Dialog {
 
     public static final String TAG = "LoadingDialog";
 
@@ -72,14 +71,4 @@ public class LoadingDialog extends Dialog implements DialogInterface.OnDismissLi
         return true;
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-
-//        if (drawable != null) {
-//
-//            drawable.stop();
-//
-//        }
-
-    }
 }

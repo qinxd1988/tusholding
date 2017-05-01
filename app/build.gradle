@@ -25,8 +25,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.realse
+            proguardFile project.PROGUARD_PATH
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的reso urce文件
+            shrinkResources true
+            minifyEnabled true
+        }
+        debug {
+            signingConfig signingConfigs.realse
+
         }
     }
+
 }
 
 dependencies {

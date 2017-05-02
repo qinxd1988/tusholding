@@ -94,6 +94,19 @@
             android:name=".browse.ui.activity.BrowseActivity"
             android:theme="@style/AppTheme.Login">
 
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="webview"
+                    android:scheme="jindiao"/>
+
+            </intent-filter>
+
         </activity>
 
         <activity

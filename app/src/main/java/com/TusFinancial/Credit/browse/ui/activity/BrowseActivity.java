@@ -1,7 +1,9 @@
 package com.TusFinancial.Credit.browse.ui.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 
 import com.TusFinancial.Credit.R;
@@ -33,6 +35,20 @@ public class BrowseActivity extends BaseImpActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
 
         url = getIntent().getStringExtra(Constants.URL);
+
+        Uri uri = getIntent().getData();
+
+        if (uri != null) {
+
+            String tempUrl = uri.getQueryParameter(Constants.URL);
+
+            if (!TextUtils.isEmpty(tempUrl)) {
+
+                url = Uri.decode(tempUrl);
+
+            }
+
+        }
 
     }
 

@@ -43,25 +43,6 @@ public class BrowseFragment extends BaseFragment {
 
     private String mCallBack;
 
-    public static BrowseFragment newInstance(String url) {
-
-        Bundle bundle = new Bundle();
-
-        bundle.putString(Constants.URL, url);
-
-        BrowseFragment fragment = new BrowseFragment();
-
-        fragment.setArguments(bundle);
-
-        return fragment;
-
-    }
-
-    @Override
-    protected boolean isSupportEventBus() {
-        return true;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -101,6 +82,37 @@ public class BrowseFragment extends BaseFragment {
 
         loadData();
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mWebView != null) {
+
+            mWebView.destroy();
+
+        }
+
+    }
+
+    public static BrowseFragment newInstance(String url) {
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(Constants.URL, url);
+
+        BrowseFragment fragment = new BrowseFragment();
+
+        fragment.setArguments(bundle);
+
+        return fragment;
+
+    }
+
+    @Override
+    protected boolean isSupportEventBus() {
+        return true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -159,6 +171,13 @@ public class BrowseFragment extends BaseFragment {
 
             }
 
+            @Override
+            public void onPageFinished(WebView view, String s) {
+                super.onPageFinished(view, s);
+
+                invokeJSToWebView();
+
+            }
         });
 
         mWebView.setOnReceivedTitleListener(new X5WebView.OnReceivedTitleListener() {
@@ -194,6 +213,18 @@ public class BrowseFragment extends BaseFragment {
 
     }
 
+    private void invokeJSToWebView() {
+
+        mWebView.loadUrl("javascript:file:///android_asset/tusApp.js");
+
+        mWebView.loadUrl("javascript:window.tusAppBridge.setScheme(tusc)");
+
+        mWebView.loadUrl("javascript:window.tusAppBridge.initData(null)");
+
+        mWebView.loadUrl("javascript:window.tusAppBridge.initReadyEvent(null)");
+
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -210,18 +241,6 @@ public class BrowseFragment extends BaseFragment {
         }
 
         return super.onKeyDown(keyCode, event);
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if (mWebView != null) {
-
-            mWebView.destroy();
-
-        }
 
     }
 

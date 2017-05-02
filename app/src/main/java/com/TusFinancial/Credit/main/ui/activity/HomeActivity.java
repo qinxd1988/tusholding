@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.browse.ui.fragment.BrowseFragment;
 import com.TusFinancial.Credit.main.ui.fragment.GanHuoFragment;
@@ -110,7 +111,9 @@ public class HomeActivity extends BaseActivity {
 
                 case R.id.tab_my_btn:
 
-                    fragment = MyFragment.newInstance();
+                    String url = Const.BASE_URL + "/web/users/index.html?token=" + JinDiaoApplication.TOKEN;
+
+                    fragment = BrowseFragment.newInstance(url);
 
                     break;
 

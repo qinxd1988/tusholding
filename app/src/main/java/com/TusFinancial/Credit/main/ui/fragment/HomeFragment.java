@@ -15,12 +15,16 @@ import android.widget.RelativeLayout;
 
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
+import com.TusFinancial.Credit.api.ApiBanners;
 import com.TusFinancial.Credit.bean.ModuleBean;
 import com.TusFinancial.Credit.bean.TemplateBean;
+import com.TusFinancial.Credit.entity.BannerEntity;
 import com.TusFinancial.Credit.main.adapter.HomeAdapter;
 import com.base.qinxd.library.image.ImageLoaderWrapper;
+import com.base.qinxd.library.network.ApiCallBack;
 import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
+import com.base.qinxd.library.utils.HttpUtils;
 import com.base.qinxd.library.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -86,8 +90,6 @@ public class HomeFragment extends BaseFragment {
         mAdapter = new HomeAdapter(getContext());
 
         manager = new LinearLayoutManager(getContext());
-
-        initData();
 
     }
 
@@ -315,6 +317,8 @@ public class HomeFragment extends BaseFragment {
 
         mRecyclerView.setAdapter(mAdapter);
 
+        autoRefresh();
+
     }
 
     private void initRefreshLayout() {
@@ -334,21 +338,7 @@ public class HomeFragment extends BaseFragment {
 
                 // 这里是主线程
                 // 一些比较耗时的操作，比如联网获取数据，需要放到子线程去执行
-                // TODO 获取数据
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        mAdapter.notifyDataSetChanged();
-
-                        ToastUtils.showToast(getContext(), "刷新了一条数据");
-
-                        // 加载完数据设置为不刷新状态，将下拉进度收起来
-                        mRefreshLayout.setRefreshing(false);
-
-                    }
-
-                }, 1200);
+                loadBannerData();
 
                 // System.out.println(Thread.currentThread().getName());
 
@@ -384,6 +374,61 @@ public class HomeFragment extends BaseFragment {
             });
 
         }
+
+    }
+
+    private void loadBannerData() {
+
+        ApiBanners api = new ApiBanners(getContext());
+
+        api.setType("1")
+                .setShowLoading(false)
+                .setApiCallBack(new ApiCallBack<BannerEntity>() {
+                    @Override
+                    public void onSuccess(BannerEntity response) {
+
+                        if (mRefreshLayout != null) {
+
+                            // 加载完数据设置为不刷新状态，将下拉进度收起来
+                            mRefreshLayout.setRefreshing(false);
+
+                        }
+
+                        initData();
+
+                    }
+
+                    @Override
+                    public void onError(BannerEntity response, String err_msg) {
+
+                        if (mRefreshLayout != null) {
+
+                            // 加载完数据设置为不刷新状态，将下拉进度收起来
+                            mRefreshLayout.setRefreshing(false);
+
+                        }
+
+                        initData();
+
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                        if (mRefreshLayout != null) {
+
+                            // 加载完数据设置为不刷新状态，将下拉进度收起来
+                            mRefreshLayout.setRefreshing(false);
+
+                        }
+
+                        initData();
+
+                    }
+
+                });
+
+        api.enqueue();
 
     }
 

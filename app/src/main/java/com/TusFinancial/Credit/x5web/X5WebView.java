@@ -14,6 +14,8 @@ public class X5WebView extends WebView {
 
     private OnReceivedTitleListener mOnReceivedTitleListener;
 
+    private OnInvokeJSListener mOnInvokeJSListener;
+
     private WebViewClient client = new WebViewClient() {
 
         /**
@@ -31,6 +33,8 @@ public class X5WebView extends WebView {
 
     private WebChromeClient mChromeClient = new WebChromeClient() {
 
+        private boolean isJSInvoke;
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
 
@@ -41,6 +45,29 @@ public class X5WebView extends WebView {
                 mOnReceivedTitleListener.receivedTitle(title);
 
             }
+
+        }
+
+        @Override
+        public void onProgressChanged(WebView webView, int progress) {
+
+            if (progress >= 30 && !isJSInvoke) {//30%的时候进行js注入
+
+                isJSInvoke = true;
+
+                if (mOnInvokeJSListener != null) {
+
+                    mOnInvokeJSListener.invokeJs();
+
+                }
+
+            } else {
+
+                isJSInvoke = false;
+
+            }
+
+            super.onProgressChanged(webView, progress);
 
         }
 
@@ -98,9 +125,25 @@ public class X5WebView extends WebView {
 
     }
 
-    public void setOnReceivedTitleListener(OnReceivedTitleListener listener) {
+    public X5WebView setOnReceivedTitleListener(OnReceivedTitleListener listener) {
 
         this.mOnReceivedTitleListener = listener;
+
+        return this;
+
+    }
+
+    public interface OnInvokeJSListener {
+
+        void invokeJs();
+
+    }
+
+    public X5WebView setOnInvokeJSListener(OnInvokeJSListener listener) {
+
+        this.mOnInvokeJSListener = listener;
+
+        return this;
 
     }
 

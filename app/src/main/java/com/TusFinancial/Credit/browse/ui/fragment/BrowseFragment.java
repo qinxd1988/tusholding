@@ -215,13 +215,23 @@ public class BrowseFragment extends BaseFragment {
 
     private void invokeJSToWebView() {
 
-        mWebView.loadUrl("javascript:file:///android_asset/tusApp.js");
+        mWebView.loadUrl("javascript:function loadScript(url, callback)" +
+                "{" +
+                "    var head = document.getElementsByTagName('head')[0];" +
+                "    var script = document.createElement('script');" +
+                "    script.type = 'text/javascript';" +
+                "    script.src = url;" +
+                "    script.onreadystatechange = callback;" +
+                "    script.onload = function initJs(){" +
+                "    window.tusAppBridge.setScheme(tusc);" +
+                "    window.tusAppBridge.initData(null);" +
+                "    window.tusAppBridge.initReadyEvent(null);" +
+                "    alert('success');" +
+                "};" +
+                "    head.appendChild(script);" +
+                "}");
 
-        mWebView.loadUrl("javascript:window.tusAppBridge.setScheme(tusc)");
-
-        mWebView.loadUrl("javascript:window.tusAppBridge.initData(null)");
-
-        mWebView.loadUrl("javascript:window.tusAppBridge.initReadyEvent(null)");
+        mWebView.loadUrl("javascript:loadScript('file:///android_asset/tusApp.js','callback')");
 
     }
 
@@ -235,6 +245,10 @@ public class BrowseFragment extends BaseFragment {
                 mWebView.goBack();
 
                 return true;
+
+            } else {
+
+                return false;
 
             }
 

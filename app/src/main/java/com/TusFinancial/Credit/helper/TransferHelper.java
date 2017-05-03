@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.browse.ui.activity.BrowseActivity;
 import com.TusFinancial.Credit.utils.Constants;
+import com.base.qinxd.library.utils.Logger;
 
 /**
  * Created by xd on 2017/4/25.
@@ -94,57 +95,73 @@ public class TransferHelper {
 
         if (!TextUtils.isEmpty(url)) {
 
+            if (url.startsWith("tel")) {
+
+                onTransfer(context, url, false);
+
+                return "";
+
+            }
+
             Uri uri = Uri.parse(url);
 
-            String host = "";
+            if (uri != null) {
 
-            String query = uri.getQuery();
+                String host = "";
 
-            String replace = "";
+                String query = uri.getQuery();
 
-            if (uri.getHost().equals("native")) {//调用本地页面逻辑
+                String replace = "";
 
-                host = uri.getQueryParameter("pageName");
+                if (uri.getHost().equals("native")) {//调用本地页面逻辑
 
-                replace = "pageName=" + host;
+                    host = uri.getQueryParameter("pageName");
 
-            } else if (uri.getHost().equals("websdk")) {
+                    replace = "pageName=" + host;
 
-                //tusc://websdk?action=login&params={json}&callback=xxxxx
+                } else if (uri.getHost().equals("websdk")) {
 
-                host = uri.getQueryParameter("action");
+                    //tusc://websdk?action=login&params={json}&callback=xxxxx
 
-                replace = "action=" + host;
+                    host = uri.getQueryParameter("action");
 
-                callback = uri.getQueryParameter("callback");
+                    replace = "action=" + host;
 
-            }
-
-            if (!TextUtils.isEmpty(query)) {
-
-                if (query.contains("&" + replace)) {
-
-                    query = query.replace("&" + replace, "");
-
-                } else if (query.contains(replace)) {
-
-                    query = query.replace(replace, "");
+                    callback = uri.getQueryParameter("callback");
 
                 }
-
-            }
-
-            if (!TextUtils.isEmpty(host) && context != null) {
-
-                String newUrl = "jindiao://" + host;
 
                 if (!TextUtils.isEmpty(query)) {
 
-                    newUrl += ("?" + query);
+                    if (query.contains("&" + replace)) {
+
+                        query = query.replace("&" + replace, "");
+
+                    } else if (query.contains(replace)) {
+
+                        query = query.replace(replace, "");
+
+                    }
 
                 }
 
-                onTransfer(context, newUrl, false);
+                if (!TextUtils.isEmpty(host) && context != null) {
+
+                    String newUrl = "jindiao://" + host;
+
+                    if (!TextUtils.isEmpty(query)) {
+
+                        newUrl += ("?" + query);
+
+                    }
+
+                    onTransfer(context, newUrl, false);
+
+                }
+
+            } else {
+
+                Logger.e(url);
 
             }
 

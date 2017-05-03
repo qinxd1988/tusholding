@@ -183,9 +183,11 @@ public class HomeActivity extends BaseActivity {
 
             if (mFragment instanceof BrowseFragment) {
 
-                ((BrowseFragment) mFragment).onKeyDown(keyCode, event);
+                if (((BrowseFragment) mFragment).onKeyDown(keyCode, event)) {
 
-                return true;
+                    return true;
+
+                }
 
             }
 

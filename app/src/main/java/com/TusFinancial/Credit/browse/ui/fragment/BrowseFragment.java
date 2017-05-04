@@ -234,9 +234,9 @@ public class BrowseFragment extends BaseFragment {
                 "};" +
                 "    head.appendChild(script);" +
                 "}");
-
-        mWebView.loadUrl("javascript:loadScript('" + Const.BASE_URL + "/web/src/js/common/tusApp.js','callback')");
 //        mWebView.loadUrl("javascript:loadScript('file:///android_asset/tusApp.js','callback')");
+        mWebView.loadUrl("javascript:loadScript('" + Const.BASE_URL + "/web/src/js/common/tusApp.js','callback')");
+        mWebView.loadUrl("javascript:window.WSBridge={platform:'Android'}");//需要给js客户端类型标识
 
     }
 

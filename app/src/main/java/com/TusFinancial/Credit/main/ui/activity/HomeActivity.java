@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
 
                 case R.id.tab_information_btn:
 
-                    fragment = InformationFragment.newInstance();
+                    fragment = BrowseFragment.newInstance(Const.INFORMATION_URL);
 
                     break;
 
@@ -111,9 +111,9 @@ public class HomeActivity extends BaseActivity {
 
                 case R.id.tab_my_btn:
 
-                    String url = Const.BASE_URL + "/web/users/index.html?token=" + JinDiaoApplication.TOKEN;
-
-                    fragment = BrowseFragment.newInstance(url);
+                    //String url = Const.BASE_URL + "/web/users/index.html?token=" + JinDiaoApplication.TOKEN;
+                    //fragment = BrowseFragment.newInstance(url);
+                    fragment = MyFragment.newInstance();
 
                     break;
 

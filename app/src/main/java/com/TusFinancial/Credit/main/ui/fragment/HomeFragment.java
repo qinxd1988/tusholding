@@ -23,6 +23,7 @@ import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 import com.base.qinxd.library.utils.ToastUtils;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -179,7 +180,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_pingji;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=1&app=1";
+                    module.linkUrl = Const.BASE_URL + "/web/list.html?type=1&app=1";
 
                     break;
 
@@ -191,7 +192,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.isNeedLogin = true;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/publicoption.html?app=1&token=" + JinDiaoApplication.TOKEN;
+                    module.linkUrl = Const.BASE_URL + "/web/publicoption.html?app=1&token=" + JinDiaoApplication.TOKEN;
 
                     break;
 
@@ -203,7 +204,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.isNeedLogin = true;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=0&app=1&token=" + JinDiaoApplication.TOKEN;
+                    module.linkUrl = Const.BASE_URL + "/web/list.html?type=0&app=1&token=" + JinDiaoApplication.TOKEN;
 
                     break;
 
@@ -213,8 +214,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_nashui;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=2&app=1";
-
+                    module.linkUrl = Const.BASE_URL + "/web/list.html?type=2&app=1";
                     break;
 
                 case 4:
@@ -223,7 +223,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_sifa;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/list.html?type=5&app=1";
+                    module.linkUrl = Const.BASE_URL + "/web/list.html?type=5&app=1";
 
                     break;
 
@@ -233,7 +233,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.imgUrl = ImageLoaderWrapper.DRAWABLE + R.drawable.ic_tiexianlilv;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/shibor.html?app=1";
+                    module.linkUrl = Const.BASE_URL + "/web/shibor.html?app=1";
 
                     break;
 
@@ -245,7 +245,7 @@ public class HomeFragment extends BaseFragment {
 
                     module.isNeedLogin = true;
 
-                    module.linkUrl = Const.BASE_URL + "/web/web/toppage.html?app=1&token=" + JinDiaoApplication.TOKEN;
+                    module.linkUrl = Const.BASE_URL + "/web/toppage.html?app=1&token=" + JinDiaoApplication.TOKEN;
 
                     break;
 

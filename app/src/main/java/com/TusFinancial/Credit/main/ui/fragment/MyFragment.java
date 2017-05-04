@@ -22,6 +22,7 @@ import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.loginRegister.ui.activity.LoginActivity;
 import com.TusFinancial.Credit.loginRegister.ui.activity.RegisterActivity;
 import com.TusFinancial.Credit.utils.Constants;
+import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -195,24 +196,24 @@ public class MyFragment extends BaseFragment {
 
         switch (view.getId()) {
 
-            case R.id.my_project_layout:
-
+            case R.id.my_project_layout://我的项目
+                url = Const.BASE_URL + "/web/users/myproject.html";
                 break;
 
-            case R.id.my_report_layout:
-
+            case R.id.my_report_layout://我的报告
+                url = Const.BASE_URL + "/web/users/myreport.html";
                 break;
 
-            case R.id.my_focus_company_layout:
-
+            case R.id.my_focus_company_layout://我的关注
+                url = Const.BASE_URL + "/web/users/subscription.html";
                 break;
 
             case R.id.my_collection_layout:
 
                 break;
 
-            case R.id.my_browsing_history_layout:
-
+            case R.id.my_browsing_history_layout://浏览记录
+                url = Const.BASE_URL + "/web/users/history.html";
                 break;
 
             case R.id.my_fankui_layout:
@@ -246,6 +247,14 @@ public class MyFragment extends BaseFragment {
 
             }
 
+        }else{
+            if(url.indexOf("token")  == -1){
+                if(url.contains("?")){
+                    url += "&token=" + JinDiaoApplication.TOKEN;
+                }else{
+                    url += "?token=" + JinDiaoApplication.TOKEN;
+                }
+            }
         }
 
         return url;

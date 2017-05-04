@@ -17,6 +17,7 @@ import com.TusFinancial.Credit.event.LoginOutEvent;
 import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.utils.Constants;
 import com.TusFinancial.Credit.x5web.X5WebView;
+import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 import com.base.qinxd.library.utils.ContextUtil;
 import com.google.gson.JsonObject;
@@ -25,6 +26,8 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.net.URLEncoder;
 
 /**
  * 作者：qinxudong
@@ -208,9 +211,7 @@ public class BrowseFragment extends BaseFragment {
     }
 
     private void loadData() {
-
         mWebView.loadUrl(mUrl);
-
     }
 
     private void invokeJSToWebView() {
@@ -231,7 +232,8 @@ public class BrowseFragment extends BaseFragment {
                 "    head.appendChild(script);" +
                 "}");
 
-        mWebView.loadUrl("javascript:loadScript('file:///android_asset/tusApp.js','callback')");
+        mWebView.loadUrl("javascript:loadScript('" + Const.BASE_URL + "/web/src/js/common/tusApp.js','callback')");
+//        mWebView.loadUrl("javascript:loadScript('file:///android_asset/tusApp.js','callback')");
 
     }
 

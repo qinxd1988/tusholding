@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
 
                 case R.id.tab_information_btn:
 
-                    fragment = BrowseFragment.newInstance(Const.INFORMATION_URL);
+                    fragment = BrowseFragment.newInstance(Const.GANHUO_URL);
 
                     break;
 

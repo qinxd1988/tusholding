@@ -174,13 +174,6 @@ public class BrowseFragment extends BaseFragment {
 
             }
 
-            @Override
-            public void onPageFinished(WebView view, String s) {
-                super.onPageFinished(view, s);
-
-                invokeJSToWebView();
-
-            }
         });
 
         mWebView.setOnReceivedTitleListener(new X5WebView.OnReceivedTitleListener() {
@@ -206,6 +199,16 @@ public class BrowseFragment extends BaseFragment {
                 }
 
             }
+        });
+
+        mWebView.setOnInvokeJSListener(new X5WebView.OnInvokeJSListener() {
+            @Override
+            public void invokeJs() {
+
+                invokeJSToWebView();
+
+            }
+
         });
 
     }

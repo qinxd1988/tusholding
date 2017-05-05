@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.browse.ui.activity.BrowseActivity;
@@ -20,6 +21,7 @@ import com.TusFinancial.Credit.x5web.X5WebView;
 import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
 import com.base.qinxd.library.utils.ContextUtil;
+import com.base.qinxd.library.utils.ToastUtils;
 import com.google.gson.JsonObject;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -124,17 +126,20 @@ public class BrowseFragment extends BaseFragment {
         if (event != null && !TextUtils.isEmpty(mCallBack)) {
 
             if (mWebView != null) {
-
                 JsonObject object = new JsonObject();
 
-                object.addProperty("status", 1);
+                String  token = event.bean.token;
 
-                object.addProperty("result", "null");
+                object.addProperty("status", token!=null ? 1 : 0);
+
+                object.addProperty("result", token);
 
                 String data = Uri.encode(object.toString());
 
                 mWebView.loadUrl("javascript:window.tusAppBridge.notify({callback:" + mCallBack + ", data:" + data + "})");
 
+                ToastUtils.showToast(getContext(),
+                        "登陆完城---------mCallBack:" + mCallBack + ",data:" + data,Toast.LENGTH_LONG);
             }
 
         }

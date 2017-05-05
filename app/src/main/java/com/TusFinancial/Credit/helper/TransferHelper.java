@@ -125,6 +125,12 @@ public class TransferHelper {
 
                     host = uri.getQueryParameter("action");
 
+                    //js通知登录超时时，应清空APP当前登录态
+                    if(host!=null && host.equals("login")){
+                        JinDiaoApplication.TOKEN = null;
+                        JinDiaoApplication.WECHAT_CODE = null;
+                    }
+
                     replace = "action=" + host;
 
                     callback = uri.getQueryParameter("callback");

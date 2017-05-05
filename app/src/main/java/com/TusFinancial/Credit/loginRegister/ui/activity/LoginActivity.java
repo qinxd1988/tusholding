@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
@@ -102,14 +103,14 @@ public class LoginActivity extends BaseImpActivity {
     public void onMessageEvent(LoginFinishEvent event) {
 
         if (event != null) {
-
             //如果是网页需要登录的，登录后url直接替换登录后的token进行页面跳转
             if (mData != null && mData.startsWith("http")) {
-
-                mData = mData.replace("&token=", "&token=" + JinDiaoApplication.TOKEN);
-
+                if(mData.contains("?token")){
+                    mData = mData.replace("?token=", "?token=" + JinDiaoApplication.TOKEN);
+                }else {
+                    mData = mData.replace("&token=", "&token=" + JinDiaoApplication.TOKEN);
+                }
                 TransferHelper.onTransfer(LoginActivity.this, mData, false);
-
             }
 
             finish();

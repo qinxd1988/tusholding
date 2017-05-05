@@ -15,4 +15,9 @@ public class ToastUtils {
 
     }
 
+    public static void showToast(Context context, String message,int duration) {
+
+        Toast.makeText(context, message, duration).show();
+
+    }
 }

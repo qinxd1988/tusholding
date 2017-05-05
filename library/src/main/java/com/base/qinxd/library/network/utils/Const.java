@@ -15,4 +15,5 @@ public class Const {
 
     public final static String GANHUO_URL = "http://wxfacab687403a1c92.mp.weixinhost.com/addon/material?a=show&id=855298588606074880&sid=855298588664823808";
 
+    public final static String INFORMATION_URL = "https://bkd.botbrain.ai/h5/v1/J8KMZCESXG/index?type=4";
 }

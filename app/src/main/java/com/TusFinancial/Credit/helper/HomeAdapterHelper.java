@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.holder.HomeNoticeHolder;
+import com.TusFinancial.Credit.holder.RollPagerHolder;
 
 /**
  * Created by xd on 2017/4/25.
@@ -48,6 +49,12 @@ public class HomeAdapterHelper {
 
                 break;
 
+            case 4://轮播图
+
+                holder = new RollPagerHolder(mContext);
+
+                break;
+
             default:
 
                 holder = new HomeNoticeHolder(mContext);
@@ -77,6 +84,10 @@ public class HomeAdapterHelper {
         } else if (viewHolder instanceof GridHolder) {
 
             ((GridHolder) viewHolder).bindData(object);
+
+        } else if (viewHolder instanceof RollPagerHolder) {
+
+            ((RollPagerHolder) viewHolder).bindData(object);
 
         }
 

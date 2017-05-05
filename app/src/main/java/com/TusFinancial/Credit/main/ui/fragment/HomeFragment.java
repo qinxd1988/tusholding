@@ -2,7 +2,6 @@ package com.TusFinancial.Credit.main.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,10 +23,7 @@ import com.base.qinxd.library.image.ImageLoaderWrapper;
 import com.base.qinxd.library.network.ApiCallBack;
 import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
-import com.base.qinxd.library.utils.HttpUtils;
-import com.base.qinxd.library.utils.ToastUtils;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import butterknife.BindView;

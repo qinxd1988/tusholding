@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="30dp"
-                        android:text="行内行外——精英客户经理必备工具"
+                        android:text="行内行外一精英客户经理必备工具"
                         android:textColor="@android:color/white"
                         android:textSize="16dp"
                         android:textStyle="bold"/>
@@ -58,6 +58,15 @@
                         android:layout_marginRight="28dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/search_bg_shape">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:text="请输入企业名称、人名、品牌名称等"
+                            android:textColor="@color/color_373b3e"
+                            android:textSize="12dp"/>
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -104,6 +113,15 @@
                 android:layout_marginRight="28dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/search_bg_shape">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="请输入企业名称、人名、品牌名称等"
+                    android:textColor="@color/color_373b3e"
+                    android:textSize="12dp"/>
 
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"

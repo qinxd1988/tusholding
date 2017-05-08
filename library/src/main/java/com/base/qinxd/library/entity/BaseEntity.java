@@ -27,4 +27,10 @@ public class BaseEntity implements Serializable {
 
     }
 
+    public String getMsg() {
+
+        return msg;
+
+    }
+
 }

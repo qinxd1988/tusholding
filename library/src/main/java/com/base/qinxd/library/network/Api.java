@@ -72,7 +72,7 @@ public abstract class Api<T> {
 
                     if (response.body() instanceof BaseEntity) {
 
-                        msg = ((BaseEntity) response.body()).msg;
+                        msg = ((BaseEntity) response.body()).getMsg();
 
                         if (isShowErrorToast) {
 
@@ -149,7 +149,25 @@ public abstract class Api<T> {
 
     }
 
+    /**
+     * post请求参数字典
+     *
+     * @return
+     */
     public Map<String, String> postParams() {
+
+        Map<String, String> map = new HashMap<>();
+
+        return map;
+
+    }
+
+    /**
+     * get请求参数字典
+     *
+     * @return
+     */
+    public Map<String, String> getParams() {
 
         Map<String, String> map = new HashMap<>();
 

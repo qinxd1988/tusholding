@@ -15,9 +15,11 @@ import android.widget.RelativeLayout;
 import com.TusFinancial.Credit.JinDiaoApplication;
 import com.TusFinancial.Credit.R;
 import com.TusFinancial.Credit.api.ApiBanners;
+import com.TusFinancial.Credit.api.ApiHomeRecommend;
 import com.TusFinancial.Credit.bean.ModuleBean;
 import com.TusFinancial.Credit.bean.TemplateBean;
 import com.TusFinancial.Credit.entity.BannerEntity;
+import com.TusFinancial.Credit.entity.RecommendEntity;
 import com.TusFinancial.Credit.main.adapter.HomeAdapter;
 import com.base.qinxd.library.image.ImageLoaderWrapper;
 import com.base.qinxd.library.network.ApiCallBack;
@@ -334,7 +336,7 @@ public class HomeFragment extends BaseFragment {
 
                 // 这里是主线程
                 // 一些比较耗时的操作，比如联网获取数据，需要放到子线程去执行
-                loadBannerData();
+                loadBannerData(false);
 
                 // System.out.println(Thread.currentThread().getName());
 
@@ -373,12 +375,12 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private void loadBannerData() {
+    private void loadBannerData(boolean isShow) {
 
         ApiBanners api = new ApiBanners(getContext());
 
         api.setType("1")
-                .setShowLoading(false)
+                .setShowLoading(isShow)
                 .setApiCallBack(new ApiCallBack<BannerEntity>() {
                     @Override
                     public void onSuccess(BannerEntity response) {
@@ -419,6 +421,34 @@ public class HomeFragment extends BaseFragment {
                         }
 
                         initData();
+
+                    }
+
+                });
+
+        api.enqueue();
+
+    }
+
+    private void loadRecommendData(boolean isShow) {
+
+        ApiHomeRecommend api = new ApiHomeRecommend(getContext());
+
+        api
+                .setShowLoading(isShow)
+                .setApiCallBack(new ApiCallBack<RecommendEntity>() {
+                    @Override
+                    public void onSuccess(RecommendEntity response) {
+
+                    }
+
+                    @Override
+                    public void onError(RecommendEntity response, String err_msg) {
+
+                    }
+
+                    @Override
+                    public void onFailure() {
 
                     }
 

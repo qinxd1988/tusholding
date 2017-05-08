@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.TusFinancial.Credit.entity.BannerEntity;
-import com.TusFinancial.Credit.entity.LoginEntity;
 import com.base.qinxd.library.network.Api;
 import com.base.qinxd.library.network.ApiRequest;
 

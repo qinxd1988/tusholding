@@ -1,14 +1,15 @@
 package com.TusFinancial.Credit.browse.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import com.TusFinancial.Credit.R;
@@ -17,6 +18,7 @@ import com.TusFinancial.Credit.event.LoginFinishEvent;
 import com.TusFinancial.Credit.event.LoginOutEvent;
 import com.TusFinancial.Credit.helper.TransferHelper;
 import com.TusFinancial.Credit.utils.Constants;
+import com.TusFinancial.Credit.x5web.WebViewJavaScriptFunction;
 import com.TusFinancial.Credit.x5web.X5WebView;
 import com.base.qinxd.library.network.utils.Const;
 import com.base.qinxd.library.ui.fragment.BaseFragment;
@@ -28,8 +30,6 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.net.URLEncoder;
 
 /**
  * 作者：qinxudong
@@ -126,20 +126,21 @@ public class BrowseFragment extends BaseFragment {
         if (event != null && !TextUtils.isEmpty(mCallBack)) {
 
             if (mWebView != null) {
+
                 JsonObject object = new JsonObject();
 
-                String  token = event.bean.token;
+                String token = event.bean.token;
 
-                object.addProperty("status", token!=null ? 1 : 0);
+                object.addProperty("status", token != null ? 1 : 0);
 
                 object.addProperty("result", token);
 
-                String data = Uri.encode(object.toString());
+                String data = Base64.encodeToString(object.toString().getBytes(), Base64.DEFAULT);
 
-                mWebView.loadUrl("javascript:window.tusAppBridge.notify({callback:" + mCallBack + ", data:" + data + "})");
+                mWebView.loadUrl("javascript:window.tusAppBridge.notify(" + mCallBack + ", " + data + ")");
 
                 ToastUtils.showToast(getContext(),
-                        "登陆完城---------mCallBack:" + mCallBack + ",data:" + data,Toast.LENGTH_LONG);
+                        "登陆完城---------mCallBack:" + mCallBack + ",data:" + data, Toast.LENGTH_LONG);
             }
 
         }
@@ -205,6 +206,35 @@ public class BrowseFragment extends BaseFragment {
 
             }
         });
+
+        mWebView.addJavascriptInterface(new WebViewJavaScriptFunction() {
+            @JavascriptInterface
+            @Override
+            public void invoke(final String action, final String params, final String callback) {
+
+                mCallBack = callback;
+
+                if (ContextUtil.isAcivityActive(getActivity())) {
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (ContextUtil.isAcivityActive(getActivity())) {
+
+                                TransferHelper.invokeJSOperate(getActivity(), action, params, callback);
+
+                            }
+
+                        }
+
+                    });
+
+                }
+
+            }
+
+        }, "tusApp");
 
         mWebView.setOnInvokeJSListener(new X5WebView.OnInvokeJSListener() {
             @Override

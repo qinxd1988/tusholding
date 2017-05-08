@@ -22,7 +22,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/my_head_shape"/>
+                android:background="@drawable/my_head_shape"
+                android:padding="2dp"/>
 
             <LinearLayout
                 android:id="@+id/my_login_register_layout"
@@ -114,8 +115,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_my_report"
                 android:drawablePadding="15dp"
-                android:text="我的报告"
                 android:gravity="center_vertical"
+                android:text="我的报告"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -142,8 +143,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_focus_company"
                 android:drawablePadding="15dp"
-                android:text="关注企业"
                 android:gravity="center_vertical"
+                android:text="关注企业"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -157,13 +158,13 @@
 
         <!-- 收藏 -->
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/my_collection_layout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -171,8 +172,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_collection"
                 android:drawablePadding="15dp"
-                android:text="收藏"
                 android:gravity="center_vertical"
+                android:text="收藏"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -199,8 +200,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_scan"
                 android:drawablePadding="15dp"
-                android:text="浏览记录"
                 android:gravity="center_vertical"
+                android:text="浏览记录"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -234,8 +235,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_setting"
                 android:drawablePadding="15dp"
-                android:text="设置"
                 android:gravity="center_vertical"
+                android:text="设置"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -262,8 +263,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_kefu"
                 android:drawablePadding="15dp"
-                android:text="客服电话"
                 android:gravity="center_vertical"
+                android:text="客服电话"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -290,8 +291,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_report"
                 android:drawablePadding="15dp"
-                android:text="用户反馈"
                 android:gravity="center_vertical"
+                android:text="用户反馈"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 
@@ -318,8 +319,8 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_about"
                 android:drawablePadding="15dp"
-                android:text="关于我们"
                 android:gravity="center_vertical"
+                android:text="关于我们"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"/>
 

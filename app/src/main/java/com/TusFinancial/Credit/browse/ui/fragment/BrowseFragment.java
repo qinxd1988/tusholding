@@ -265,7 +265,6 @@ public class BrowseFragment extends BaseFragment {
                 "    window.tusAppBridge.setScheme(tusc);" +
                 "    window.tusAppBridge.initData(null);" +
                 "    window.tusAppBridge.initReadyEvent(null);" +
-                "    alert('success');" +
                 "};" +
                 "    head.appendChild(script);" +
                 "}");

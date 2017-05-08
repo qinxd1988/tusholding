@@ -1,5 +1,7 @@
 package com.base.qinxd.library.entity;
 
+import com.base.qinxd.library.network.utils.Code;
+
 import java.io.Serializable;
 
 /**
@@ -23,7 +25,7 @@ public class BaseEntity implements Serializable {
 
     public boolean isSuccess() {
 
-        return "C00000".equals(code);
+        return Code.OK.equals(code);
 
     }
 

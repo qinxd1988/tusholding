@@ -41,12 +41,12 @@ public class RecommendEntity extends BaseEntity {
     /**
      * 错误编码
      */
-    public String error_code;
+    public String errorCode;
 
     /**
      * 错误信息
      */
-    public String error_msg;
+    public String errorMsg;
 
     public String columnid;
 
@@ -64,9 +64,9 @@ public class RecommendEntity extends BaseEntity {
     @Override
     public String getMsg() {
 
-        if (!TextUtils.isEmpty(error_msg)) {
+        if (!TextUtils.isEmpty(errorMsg)) {
 
-            return error_msg;
+            return errorMsg;
 
         }
 

@@ -6,23 +6,21 @@ import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
+
 import com.base.qinxd.library.R;
 import com.base.qinxd.library.utils.ScreenUtils;
 
 import java.lang.reflect.Field;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * 支持轮播和提示的的viewpager
@@ -44,11 +42,13 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     //hint透明度
     private int alpha;
 
-
     private View mHintView;
-    private Timer timer;
 
     private int current;
+
+    private boolean isTouch;
+
+    private InternalHandler mHandler;
 
     public RollPagerView(Context context) {
         this(context, null);
@@ -88,9 +88,21 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
         mViewPager.requestFocus();
 
+        mViewPager.addOnPageChangeListener(this);
+
         type.recycle();
 
         initHint(mode);
+    }
+
+    private void stopPlay() {
+
+        if (mHandler != null) {
+
+            mHandler.removeCallbacksAndMessages(null);
+
+        }
+
     }
 
     /**
@@ -104,48 +116,15 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
         }
 
-        if (timer != null) {
+        if (mHandler == null) {
 
-            timer.cancel();
+            mHandler = new InternalHandler();
 
         }
 
-        timer = new Timer();
-        //用一个timer定时设置当前项为下一项
-        timer.schedule(new TimerTask() {
+        stopPlay();
 
-            @Override
-            public void run() {
-
-                if (isShown() && System.currentTimeMillis() - mRecentTouchTime > delay)
-
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            int cur = mViewPager.getCurrentItem() + 1;
-
-                            if (cur >= mAdapter.getCount()) {
-
-                                cur = 0;
-
-                            }
-
-                            mViewPager.setCurrentItem(cur);
-
-                            if (mHintView != null) {
-
-                                ((HintView) mHintView).setCurrent(cur);
-
-                            }
-
-                        }
-                    });
-
-            }
-
-        }, delay, delay);
+        mHandler.sendEmptyMessageDelayed(0, delay);
 
     }
 
@@ -284,8 +263,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
         mViewPager.setAdapter(adapter);
 
-        mViewPager.setOnPageChangeListener(this);
-
         mAdapter = adapter;
 
         dataSetChanged();
@@ -312,17 +289,24 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     private class JPagerObserver extends DataSetObserver {
         @Override
         public void onChanged() {
+
             dataSetChanged();
+
         }
 
         @Override
         public void onInvalidated() {
+
             dataSetChanged();
+
         }
+
     }
 
     private void dataSetChanged() {
+
         startPlay();
+
         if (mHintView != null) {
 
             if (mAdapter.getCount() > 1) {
@@ -338,6 +322,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
             ((HintView) mHintView).initView(mAdapter.getCount(), gravity);
 
         }
+
     }
 
 
@@ -352,45 +337,60 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
         mRecentTouchTime = System.currentTimeMillis();
 
-        super.dispatchTouchEvent(ev);
-
-
         switch (ev.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
 
-                ((ViewGroup) getParent()).requestDisallowInterceptTouchEvent(true);
+            case MotionEvent.ACTION_MOVE:
+
+                isTouch = true;
+
+                stopPlay();
 
                 break;
 
             case MotionEvent.ACTION_UP:
 
-                ((ViewGroup) getParent()).requestDisallowInterceptTouchEvent(false);
+            case MotionEvent.ACTION_CANCEL:
+
+                isTouch = false;
+
+                dataSetChanged();
 
                 break;
 
         }
 
-        return true;
+        return super.dispatchTouchEvent(ev);
+
     }
 
     @Override
-    public void onPageScrollStateChanged(int arg0) {
+    public void onPageScrollStateChanged(int state) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void onPageSelected(int arg0) {
-        if (mHintView != null) ((HintView) mHintView).setCurrent(arg0);
+    public void onPageSelected(int position) {
 
-        current = arg0;
+        if (mAdapter != null) {
+
+            current = position;
+
+            if (mHintView != null) {
+
+                ((HintView) mHintView).setCurrent(current);
+
+            }
+
+        }
 
     }
 
@@ -404,9 +404,31 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (timer != null) {
+        stopPlay();
 
-            timer.cancel();
+    }
+
+    private class InternalHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (mViewPager != null && !isTouch) {
+
+                int cur = mViewPager.getCurrentItem() + 1;
+
+                if (cur >= mAdapter.getCount()) {
+
+                    cur = 0;
+
+                }
+
+                mViewPager.setCurrentItem(cur);
+
+                sendEmptyMessageDelayed(0, delay);
+
+            }
 
         }
 
